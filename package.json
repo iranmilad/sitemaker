@@ -3,11 +3,20 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "prod": "npm run production"
     },
     "devDependencies": {
         "axios": "^1.6.4",
         "laravel-vite-plugin": "^1.0.0",
-        "vite": "^5.0.0"
+        "vite": "^5.1.2"
+    },
+    "dependencies": {
+        "desandro-matches-selector": "^2.0.2",
+        "ev-emitter": "^2.1.2",
+        "fizzy-ui-utils": "^3.0.0",
+        "get-size": "^3.0.0",
+        "jquery": "^3.6.0",
+        "outlayer": "^2.1.1"
     }
 }
