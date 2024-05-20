@@ -7,7 +7,7 @@
 
 /* =======================================================================
  Table of Content:
- 
+
  1. Preloader Loading
  2. Sticky Header
  3. Mobile Main Menu
@@ -1142,15 +1142,18 @@
     function price_slider() {
         $("#slider-range").slider({
             range: true,
-            min: 12,
-            max: 200,
-            values: [0, 100],
+            min: 0,
+            max: 200000000,
+            values: [0, 200000000],
             slide: function (event, ui) {
-                $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+                $("#amount").val(ui.values[0] + " - " + ui.values[1]);
+                $("#minprice").val(ui.values[0]);
+                $("#maxprice").val(ui.values[1]);
             }
         });
-        $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-                " - $" + $("#slider-range").slider("values", 1));
+        $("#amount").val( $("#slider-range").slider("values", 0) + " - " + $("#slider-range").slider("values", 1));
+        $("#minprice").val($("#slider-range").slider("values", 0));
+        $("#maxprice").val($("#slider-range").slider("values", 1));
     }
     price_slider();
 

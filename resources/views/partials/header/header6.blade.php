@@ -5,18 +5,19 @@
             <div class="row">
                 <!--Logo-->
                 <div class="logo col-4 col-sm-4 col-md-4 col-lg-3 col-xxl-3 align-self-center">
-                    <a class="logoImg" href="index.html"><img src="{{ asset('storage/images/logo-jewelry.png')}}" alt="Hema Multipurpose Html Template" title="Hema Multipurpose Html Template" width="149" height="39" /></a>
+                    <a class="logoImg" href="/home"><img src="{{ asset('storage/images/logo-jewelry.png')}}" alt="Hema Multipurpose Html Template" title="Hema Multipurpose Html Template" width="149" height="39" /></a>
                 </div>
                 <!--End Logo-->
                 <!--Search Inline-->
-                <div class="col-1 col-sm-1 col-md-1 col-lg-6 col-xxl-6 align-self-center d-none d-lg-block">
+                <div class="col-1 col-sm-1 col-md-1 col-lg-6 col-xxl-6 align-self-center d-none d-lg-block mr-5">
                     <div class="minisearch-inline px-xl-5">
-                        <form class="form minisearch" id="header-search0" action="#" method="get">
+                        <form class="form minisearch" id="header-search0" action="{{ route('search') }}" method="post">
+                            @csrf
                             <label class="label d-none"><span>جستجو</span></label>
                             <!--فیلد جستجو-->
                             <div class="d-flex searchField">
-                                <div class="search-category">
-                                    <select class="rgsearch-category rounded-end-0">
+                                <div class="search-category d-none">
+                                    <select class="rgsearch-category rounded-end-0" name="category">
                                         <option value="0">همه دسته ها</option>
                                         <option value="1">- همه</option>
                                         <option value="2">- مد</option>
@@ -29,7 +30,7 @@
                                     </select>
                                 </div>
                                 <div class="input-box d-flex fl-1 position-relative">
-                                    <input type="text" class="input-group-field input-text rounded-end-0 border-end-0" placeholder="جستجوی محصولات، برندها..." value="" />
+                                    <input type="text" name="q" class="input-group-field input-text" placeholder="جستجوی محصولات، برندها..." value="" />
                                     <button type="submit" class="input-group-btn action search d-flex-justify-center text-link"><i class="hdr-icon icon anm anm-search-l"></i></button>
                                 </div>
                             </div>
@@ -140,7 +141,7 @@
                     </div>
                     <!--End Search-->
                     <!--Compare-->
-                    <div class="compare-link iconset">
+                    <div class="compare-link iconset d-none">
                         <a href="compare-style1.html" class="icon-link d-flex flex-column">
                             <span class="iconCot"><i class="hdr-icon icon anm anm-random-r"></i><span class="wishlist-count">3</span></span>
                             <span class="text">مقایسه</span>
@@ -149,8 +150,8 @@
                     <!--End Compare-->
                     <!--Wishlist-->
                     <div class="wishlist-link iconset">
-                        <a href="wishlist-style1.html" class="icon-link d-flex flex-column">
-                            <span class="iconCot"><i class="hdr-icon icon anm anm-heart-l"></i><span class="wishlist-count">5</span></span>
+                        <a href="{{ route('favorites') }}" class="icon-link d-flex flex-column">
+                            <span class="iconCot"><i class="hdr-icon icon anm anm-heart-l"></i><span class="wishlist-count d-none">5</span></span>
                            <span class="text">لیست آرزوها</span>
                         </a>
                     </div>
@@ -158,7 +159,7 @@
                     <!--Minicart-->
                     <div class="header-cart iconset">
                         <a href="#;" class="header-cart btn-minicart icon-link d-flex flex-column" data-bs-toggle="offcanvas" data-bs-target="#minicart-drawer">
-                            <span class="iconCot"><i class="hdr-icon icon anm anm-bag-l"></i><span class="cart-count">2</span></span>
+                            <span class="iconCot"><i class="hdr-icon icon anm anm-bag-l"></i><span class="cart-count">{{$cartCount}}</span></span>
                              <span class="text">سبد خرید من</span>
                         </a>
                     </div>
@@ -180,12 +181,12 @@
         <div class="container container-1330">
             <div class="menu-outer rounded-5">
                 <div class="row">
-                    <div class="col-1 col-sm-1 col-md-1 col-lg-10 align-self-center d-menu-col hdr-menu-left menu-position-left">
+                    {{-- <div class="col-1 col-sm-1 col-md-1 col-lg-10 align-self-center d-menu-col hdr-menu-left menu-position-left">
                         <nav class="navigation" id="AccessibleNav">
                             <ul id="siteNav" class="site-nav medium left">
                                 <li class="lvl1 parent dropdown"><a href="#">صفحه اصلی <i class="icon anm anm-angle-down-l"></i></a>
                                     <ul class="dropdown">
-                                        <li><a href="index.html" class="site-nav lvl-2">صفحه اصلی 01 - مد</a></li>
+                                        <li><a href="/home" class="site-nav lvl-2">صفحه اصلی 01 - مد</a></li>
                                         <li><a href="index2-footwear.html" class="site-nav lvl-2">صفحه اصلی 02 - کفش</a></li>
                                         <li><a href="index3-bags.html" class="site-nav lvl-2">صفحه اصلی 03 - کیف</a></li>
                                         <li><a href="index4-electronic.html" class="site-nav lvl-2">صفحه اصلی 04 - الکترونیک</a></li>
@@ -227,7 +228,7 @@
                                             </li>
                                             <li class="lvl-1 col-md-3 col-lg-3 w-22"><a href="#;" class="site-nav lvl-1 menu-title">خرید صفحه دیگر</a>
                                                 <ul class="subLinks">
-                                                    <li class="lvl-2"><a href="wishlist-style1.html" class="site-nav lvl-2">سبک لیست علاقه مندی1</a></li>
+                                                    <li class="lvl-2"><a href="{{ route('favorites') }}" class="site-nav lvl-2">سبک لیست علاقه مندی1</a></li>
                                                     <li class="lvl-2"><a href="wishlist-style2.html" class="site-nav lvl-2">سبک لیست علاقه مندی 2</a></li>
                                                     <li class="lvl-2"><a href="compare-style1.html" class="site-nav lvl-2">مقایسه سبک 1</a></li>
                                                     <li class="lvl-2"><a href="compare-style2.html" class="site-nav lvl-2">مقایسه سبک 2</a></li>
@@ -354,9 +355,9 @@
                                 </li>
                                 <li class="lvl1 parent dropdown"><a href="#">صفحات <i class="icon anm anm-angle-down-l"></i></a>
                                     <ul class="dropdown">
-                                        <li><a href="aboutus-style1.html" class="site-nav">درباره ما <i class="icon anm anm-angle-left-l"></i></a>
+                                        <li><a href="{{ route('contact-us') }}" class="site-nav">درباره ما <i class="icon anm anm-angle-left-l"></i></a>
                                             <ul class="dropdown">
-                                                <li><a href="aboutus-style1.html" class="site-nav">درباره ما Style1</a></li>
+                                                <li><a href="{{ route('contact-us') }}" class="site-nav">درباره ما Style1</a></li>
                                                 <li><a href="aboutus-style2.html" class="site-nav">درباره ما Style2</a></li>
                                             </ul>
                                         </li>
@@ -366,11 +367,11 @@
                                                 <li><a href="contact-style2.html" class="site-nav">تماس با ما Style2</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="my-account.html" class="site-nav">حساب من <i class="icon anm anm-angle-left-l"></i></a>
+                                        <li><a href="{{ route('dashboard.home') }}" class="site-nav">حساب من <i class="icon anm anm-angle-left-l"></i></a>
                                             <ul class="dropdown">
-                                                <li><a href="my-account.html" class="site-nav">حساب من</a></li>
-                                                <li><a href="login.html" class="site-nav">ورود به سیستم</a></li>
-                                                <li><a href="register.html" class="site-nav">ثبت نام</a></li>
+                                                <li><a href="{{ route('dashboard.home') }}" class="site-nav">حساب من</a></li>
+                                                <li><a href="{{ route('login') }}" class="site-nav">ورود به سیستم</a></li>
+                                                <li><a href="{{ route('register') }}" class="site-nav">ثبت نام</a></li>
                                                 <li><a href="forgot-password.html" class="site-nav">گذرواژه را فراموش کرده‌اید</a></li>
                                             </ul>
                                         </li>
@@ -402,10 +403,11 @@
                                 </li>
                             </ul>
                         </nav>
-                    </div>
-                    <div class="col-1 col-sm-1 col-md-1 col-lg-2 align-self-center text-right">
+                    </div> --}}
+                    <x-desktop-menu :alias="'main_menu'" style="6" />
+                    {{-- <div class="col-1 col-sm-1 col-md-1 col-lg-2 align-self-center text-right">
                         <a href="#;" class="store-link text-uppercase pe-2"><i class="anm anm-map-marker-alt me-2"></i>فروشگاه یاب</a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

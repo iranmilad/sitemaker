@@ -1,9 +1,9 @@
 <div class="mobile-nav-wrapper" role="navigation">
     <div class="closemobileMenu">بستن منو <i class="icon anm anm-times-l"></i></div>
     <ul id="MobileNav" class="mobile-nav">
-        <li class="lvl1 parent dropdown"><a href="index.html">صفحه اصلی <i class="icon anm anm-angle-down-l"></i></a>
+        <li class="lvl1 parent dropdown"><a href="/home">صفحه اصلی <i class="icon anm anm-angle-down-l"></i></a>
             <ul class="lvl-2">
-                <li><a href="index.html" class="site-nav">صفحه اصلی 01 - مد</a></li>
+                <li><a href="/home" class="site-nav">صفحه اصلی 01 - مد</a></li>
                 <li><a href="index2-footwear.html" class="site-nav">صفحه اصلی 02 - کفش</a></li>
                 <li><a href="index3-bags.html" class="site-nav">صفحه اصلی 03 - کیف</a></li>
                 <li><a href="index4-electronic.html" class="site-nav">صفحه اصلی 04 - الکترونیک</a></li>
@@ -45,7 +45,7 @@
                 </li>
                 <li><a href="#;" class="site-nav">خرید صفحه دیگر <i class="icon anm anm-angle-down-l"></i></a>
                     <ul class="lvl-3">
-                        <li><a href="wishlist-style1.html" class="site-nav">سبک فهرست دلخواه 1</a></li>
+                        <li><a href="{{ route('favorites') }}" class="site-nav">سبک فهرست دلخواه 1</a></li>
                         <li><a href="wishlist-style2.html" class="site-nav">سبک فهرست آرزوها 2</a></li>
                         <li><a href="compare-style1.html" class="site-nav">مقایسه سبک 1</a></li>
                         <li><a href="compare-style2.html" class="site-nav">مقایسه سبک 2</a></li>
@@ -88,9 +88,9 @@
         </li>
         <li class="lvl1 parent dropdown"><a href="#;">صفحات <i class="icon anm anm-angle-down-l"></i></a>
             <ul class="lvl-2">
-                <li><a href="aboutus-style1.html" class="site-nav">درباره ما <i class="icon anm anm-angle-down-l"></i></a>
+                <li><a href="{{ route('contact-us') }}" class="site-nav">درباره ما <i class="icon anm anm-angle-down-l"></i></a>
                     <ul class="lvl-3 dropdown">
-                        <li><a href="aboutus-style1.html" class="site-nav">درباره ما Style1</a></li>
+                        <li><a href="{{ route('contact-us') }}" class="site-nav">درباره ما Style1</a></li>
                         <li><a href="aboutus-style2.html" class="site-nav">درباره ما Style2</a></li>
                     </ul>
                 </li>
@@ -100,11 +100,11 @@
                         <li><a href="contact-style2.html" class="site-nav">تماس با ما Style2</a></li>
                     </ul>
                 </li>
-                <li><a href="my-account.html" class="site-nav">حساب من <i class="icon anm anm-angle-down-l"></i></a>
+                <li><a href="{{ route('dashboard.home') }}" class="site-nav">حساب من <i class="icon anm anm-angle-down-l"></i></a>
                     <ul class="lvl-3 dropdown">
-                        <li><a href="my-account.html" class="site-nav">حساب من</a></li>
-                        <li><a href="login.html" class="site-nav">ورود به سیستم</a></li>
-                        <li><a href="register.html" class="site-nav">ثبت نام</a></li>
+                        <li><a href="{{ route('dashboard.home') }}" class="site-nav">حساب من</a></li>
+                        <li><a href="{{ route('login') }}" class="site-nav">ورود به سیستم</a></li>
+                        <li><a href="{{ route('register') }}" class="site-nav">ثبت نام</a></li>
                         <li><a href="forgot-password.html" class="site-nav">گذرواژه را فراموش کرده‌اید</a></li>
                     </ul>
                 </li>
@@ -138,9 +138,9 @@
         <li class="mobile-menu-bottom">
             <div class="mobile-links">
                 <ul class="list-inline d-inline-flex flex-column w-100">
-                    <li><a href="login.html" class="d-flex align-items-center"><i class="icon anm anm-sign-in-al"></i>ورود به سیستم</a></li>
-                    <li><a href="register.html" class="d-flex align-items-center"><i class="icon anm anm-user-al"></i>ثبت نام</a></li>
-                    <li><a href="my-account.html" class="d-flex align-items-center"><i class="icon anm anm-user-cil"></i>حساب من</a></li>
+                    <li><a href="{{ route('login') }}" class="d-flex align-items-center"><i class="icon anm anm-sign-in-al"></i>ورود به سیستم</a></li>
+                    <li><a href="{{ route('register') }}" class="d-flex align-items-center"><i class="icon anm anm-user-al"></i>ثبت نام</a></li>
+                    <li><a href="{{ route('dashboard.home') }}" class="d-flex align-items-center"><i class="icon anm anm-user-cil"></i>حساب من</a></li>
                     <li class="title h5">به کمک نیاز دارید؟</li>
                     <li><a href="tel:401234567890" class="d-flex align-items-center"><i class="icon anm anm-phone-l"></i> <span dir="ltr">(+40) 123 456 7890</span> </a></li>
                     <li><a href="mailto:info@example.com" class="d-flex align-items-center"><i class="icon anm anm-envelope-l"></i> info@example .com</a></li>

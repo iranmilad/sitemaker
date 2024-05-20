@@ -16,7 +16,7 @@
                             <h1>خرید نتایج جستجو</h1>
                         </div>
                         <!--Breadcrumbs-->
-                        <span class="breadcrumbs"><a href="index.html" title="بازگشت به صفحه اصلی">صفحه
+                        <span class="breadcrumbs"><a href="/home" title="بازگشت به صفحه اصلی">صفحه
                                 اصلی</a><span class="title"><i
                                     class="icon anm anm-angle-left-l"></i>خرید</span><span class="main-title"><i
                                     class="icon anm anm-angle-left-l"></i>خرید نتایج جستجو</span> </span>

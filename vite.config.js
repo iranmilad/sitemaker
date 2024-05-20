@@ -15,7 +15,8 @@ export default defineConfig({
                 'resources/js/main.js',
                 'resources/js/app.js',
                 'resources/js/vendor/jquery.elevatezoom.js',
-                'resources/js/vendor/photoswipe.min.js'
+                'resources/js/vendor/photoswipe.min.js',
+                'resources/js/ajax_sendmail.js',
             ],
             refresh: true,
 

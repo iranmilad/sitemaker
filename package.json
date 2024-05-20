@@ -17,6 +17,7 @@
         "fizzy-ui-utils": "^3.0.0",
         "get-size": "^3.0.0",
         "jquery": "^3.6.0",
-        "outlayer": "^2.1.1"
+        "outlayer": "^2.1.1",
+        "toastr": "^2.1.4"
     }
 }

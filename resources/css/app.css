@@ -1,3 +1,4 @@
 @import "./plugins.css";
 @import "./style-min.css";
 @import "./responsive.css";
+@import "./vendors/toaster/toastr.css";

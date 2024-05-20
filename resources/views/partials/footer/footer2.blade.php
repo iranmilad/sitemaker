@@ -6,47 +6,49 @@
                         <div class="ftr-logoText mb-4">
                             <img class="logoImg" src="{{ asset('storage/images/logo-white.png')}}" alt="قالب Html چند منظوره Hema" title="قالب Html چند منظوره Hema" width="149" height="39" />
                         </div>
-                        <li class="list-inline-item">توضیحات درباره فروشگاه ...</li>
+                        <li class="list-inline-item">{{ $info ?? ''}}</li>
                     </div>
 
                     <div class="col-12 col-sm-12 col-md-12 col-lg-9 ftr-rgt-menu">
                         <div class="row flex-column-reverse flex-md-row">
                             <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-contact mt-1 mt-md-0">
+                                <x-footer-menu :alias="'footer_contact_us'"  style="1"/>
 
-                                <p class="phone d-flex align-items-center fs-5 fw-600 mb-2"><a href="tel:02126658367" dir="ltr">021 26658367 <i class="icon anm anm-phone"></i></a></p>
-                                <div class="open-hours">
-                                     آدرس: تهران خیابان<br>
-                                    شنبه - پنجشنبه: 9:00-20:00<br>
-                                    جمعه: 11:00 الی 15:00
-                                </div>
-                                <p class="email d-flex align-items-center mb-2"><a href="mailto:info@example.com">info@example.com</a></p>
                                 <ul class="list-inline social-icons mt-3">
-                                    <li class="list-inline-item"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="فیس بوک"><i class="icon anm anm-facebook-f"></i></a></li>
-                                    <li class="list-inline-item"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="توییتر"><i class="icon anm anm-twitter"></i></a></li>
-                                    <li class="list-inline-item"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="پینترست"><i class="icon anm anm-pinterest-p"></i></a></li>
-                                    <li class="list-inline-item"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="لینکدین"><i class="icon anm anm-linkedin-in"></i></a></li>
-                                    <li class="list-inline-item"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="اینستاگرام"><i class="icon anm anm-instagram"></i></a></li>
-                                    <li class="list-inline-item"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="یوتیوب"><i class="icon anm anm-youtube"></i></a></li>
+                                    @foreach ($menus['social_media_menu']->childMenus  as $menu)
+                                    <li class="list-inline-item">
+                                        <a class="social-media-icon" href="{{ $menu->link }}"  data-bs-toggle="tooltip" data-bs-placement="top">
+                                            <img src="{{  $menu->icon }}" width="30" height="30" alt="">
+                                        </a>
+                                    </li>
+                                    @endforeach
+
                                 </ul>
                             </div>
                             <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
                                 <h4 class="h4">پیوندها</h4>
                                 <ul>
-                                    <li><a href="/blog">بلاگ</a></li>
-                                    <li><a href="/faqs">سوالات متداول</a></li>
-                                    <li><a href="#">رویه بازگرداندن کالا</a></li>
-                                    <li><a href="#">شرایط و قوانین</a></li>
-                                    <li><a href="/about">درباره ما</a></li>
-                                    <li><a href="/contact">تماس با ما</a></li>
+                                    <li><a href="{{ route('dashboard.home') }}">حساب من</a></li>
+                                    <li><a href="{{ route('about-us') }}">درباره ما</a></li>
+                                    <li><a href="{{ route('login') }}">ورود به سیستم</a></li>
+                                    <li><a href="{{ route('contact-us') }}">تماس با ما</a></li>
+                                    <li><a href="{{ route('terms') }}">شرایط و قوانین</a></li>
                                 </ul>
                             </div>
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
+                                <x-footer-menu :alias="'quick_access'" style="1" />
+                            </div>
                             <div class="col-12 col-sm-12 col-md-3 col-lg-3">
-                                <h4 class="h4">نمادها</h4>
+                                <h4 class="h4">{{ $menus['namad_menu']->title}}</h4>
+                                @foreach ($menus['namad_menu']->childMenus  as $menu)
+                                    <a  href="{{ $menu->link }}">
+                                    <img class="tw-w-16" src="{{  $menu->icon }}" width="100" height="100" alt="">
+                                    </a>
+                                @endforeach
 
-                                <a href="#" ><img src="{{ asset('storage/images/enamad.png')}}" alt="" width="93" height="93"></a>
 
                             </div>
-                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links d-none">
                                 <div class="footer-newsletter icon-arrow">
                                     <form action="#" method="post">
                                         <label class="h4 mb-2">عضویت در خبرنامه</label>
@@ -63,7 +65,7 @@
                 </div>
             </div>
         </div>
-        <div class="footer-middle clearfix">
+        <div class="footer-middle clearfix d-none">
             <div class="container container-1330">
                 <ul class="ftr-info list-inline d-inline-flex w-100 justify-content-center text-center flex-column flex-sm-row">
                     <li class="list-inline-item">ارسال رایگان برای تمامی سفارش های بالای 500 هزار تومان <a href="#" class="text-link text-uppercase ms-1">هم اکنون خرید کنید</a></li>

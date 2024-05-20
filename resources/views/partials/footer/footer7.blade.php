@@ -3,43 +3,36 @@
         <div class="container container-1330">
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-6 col-lg-3 footer-contact order-1 order-lg-0 mt-1 mt-md-4 mt-lg-0">
-                    <h4 class="h4">اطلاعات تماس</h4>
-                    <p class="phone d-flex align-items-center"><i class="icon anm anm-phone-l d-none"></i> <b class="me-1">تلفن:</b> <b class="me-2 fw-400">تلفن رایگان</b> <a href="tel:401234567890" dir="ltr">(+40) 123 456 7890</a></p>
-                    <p class="email d-flex align-items-center"><i class="icon anm anm-envelope-l d-none"></i> <b class="me-1">ایمیل:</b> <a href="mailto:info@example.com">info@example.com</a></p>
-                    <p class="address d-flex"><i class="icon anm anm-map-marker-al pt-1 d-none"></i> <b class="me-1">آدرس:</b> نام خیابان 123، شهر، انگلستان</p>
-                    <p class="work-hour d-flex mb-0"><i class="icon anm anm-clock-r pt-1 d-none"></i><span class="hour-time"> <b class="me-1">روزها / ساعات کاری:</b> <br/>دوشنبه - یکشنبه / 9:00 صبح تا 8:00 بعد از ظهر</span></p>
+                    <x-footer-menu :alias="'footer_contact_us'"  style="1"/>
                 </div>
                 <div class="col-12 col-sm-12 col-md-4 col-lg-2 footer-links">
                     <h4 class="h4">حساب من</h4>
                     <ul>
-                        <li><a href="my-account.html">حساب من</a></li>
-                        <li><a href="#">سابقه سفارش</a></li>
-                        <li><a href="contact-style1.html">با ما تماس بگیرید</a></li>
-                        <li><a href="#">سفارش‌ها و بازگشت‌ها</a></li>
-                        <li><a href="#">مرکز پشتیبانی</a></li>
+                        <li><a href="{{ route('register') }}">ثبت نام</a></li>
+                        <li><a href="{{ route('login') }}">ورود به سیستم</a></li>
+                        <li><a href="{{ route('dashboard.home') }}">حساب من</a></li>
+                        <li><a href="{{ route('dashboard.home') }}">سابقه سفارش</a></li>
+                        <li><a href="{{ route('favorites') }}">لیست آرزوها</a></li>
                     </ul>
                 </div>
                 <div class="col-12 col-sm-12 col-md-4 col-lg-2 footer-links">
-                    <h4 class="h4">اطلاعات</h4>
-                    <ul>
-                        <li><a href="aboutus-style1.html">درباره ما</a></li>
-                        <li><a href="contact-style1.html">با ما تماس بگیرید</a></li>
-                        <li><a href="blog-grid.html">آخرین اخبار</a></li>
-                        <li><a href="#">خط مشی رازداری</a></li>
-                        <li><a href="#">شرایط و شرایط</a></li>
-                    </ul>
+                    <x-footer-menu :alias="'categories_footer'"  style="1"/>
                 </div>
                 <div class="col-12 col-sm-12 col-md-4 col-lg-2 footer-links">
-                    <h4 class="h4">فروشگاه سریع</h4>
-                    <ul>
-                        <li><a href="#">کیف و لوازم جانبی</a></li>
-                        <li><a href="#">ابزارها و قطعات</a></li>
-                        <li><a href="#">سبزیجات</a></li>
-                        <li><a href="#">جواهرات</a></li>
-                        <li><a href="#">آرایشی</a></li>
-                    </ul>
+                    <x-footer-menu :alias="'quick_access'" style="1" />
                 </div>
-                <div class="col-12 col-sm-12 col-md-6 col-lg-3 footer-instagram order-2 order-lg-0 mt-4 mt-lg-0">
+
+
+                <div class="col-12 col-sm-12 col-md-4 col-lg-2 footer-links">
+                    <h4 class="h4">{{ $menus['namad_menu']->title}}</h4>
+                    @foreach ($menus['namad_menu']->childMenus  as $menu)
+                        <a  href="{{ $menu->link }}">
+                        <img class="tw-w-16" src="{{  $menu->icon }}" width="100" height="100" alt="">
+                        </a>
+                    @endforeach
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-6 col-lg-3 footer-instagram order-2 order-lg-0 mt-4 mt-lg-0 d-none">
                     <h4 class="h4">اینستاگرام</h4>
                     <!--Instagram grid-->
                     <div class="instagram-section instagram-grid position-relative">
@@ -102,16 +95,19 @@
     <div class="footer-bottom clearfix">
         <div class="container container-1330">
             <div class="row">
+
                 <ul class="list-inline social-icons d-inline-flex align-items-center justify-content-center justify-content-sm-start col-12 col-sm-6 col-lg-4">
-                    <li class="list-inline-item"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="فیس بوک"><i class="icon anm anm-facebook-f"></i></a></li>
-                    <li class="list-inline-item"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="توییتر"><i class="icon anm anm-twitter"></i></a></li>
-                    <li class="list-inline-item"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="پینترست"><i class="icon anm anm-pinterest-p"></i></a></li>
-                    <li class="list-inline-item"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="لینکدین"><i class="icon anm anm-linkedin-in"></i></a></li>
-                    <li class="list-inline-item"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="اینستاگرام"><i class="icon anm anm-instagram"></i></a></li>
-                    <li class="list-inline-item"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="یوتیوب"><i class="icon anm anm-youtube"></i></a></li>
+                    @foreach ($menus['social_media_menu']->childMenus  as $menu)
+                    <li class="list-inline-item">
+                        <a class="d-flex-justify-center" href="{{ $menu->link }}" data-bs-toggle="tooltip" data-bs-placement="top">
+                            <img src="{{  $menu->icon }}" width="30" height="30" alt="">
+                        </a>
+                    </li>
+                    @endforeach
                 </ul>
-                <div class="copytext text-center col-12 col-md-12 col-lg-4 order-2 order-lg-0 mt-3 mt-lg-0">&copy; 2023 هما تمامی حقوق محفوظ است.</div>
-                <ul class="payment-icons d-flex-center justify-content-center justify-content-sm-end col-12 col-sm-6 col-lg-4 mt-3 mt-sm-0">
+                <div class="copytext text-center col-12 col-md-12 col-lg-4 order-2 order-lg-0 mt-3 mt-lg-0">&copy; 2024 تمامی حقوق برای فروشگاه ساز محفوظ است.</div>
+
+                <ul class="payment-icons d-flex-center justify-content-center justify-content-sm-end col-12 col-sm-6 col-lg-4 mt-3 mt-sm-0 d-none">
                     <li><i class="icon anm anm-cc-visa"></i></li>
                     <li><i class="icon anm anm-cc-mastercard"></i></li>
                     <li><i class="icon anm anm-cc-amex"></i></li>

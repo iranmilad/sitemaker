@@ -15,7 +15,7 @@
                             <h1> مقایسه سبک1</h1>
                         </div>
                         <!--Breadcrumbs-->
-                        <div class="breadcrumbs"><a href="index.html" title="Back to the home page">خانه</a><span
+                        <div class="breadcrumbs"><a href="/home" title="Back to the home page">خانه</a><span
                                 class="main-title"><i class="icon anm anm-angle-left-l"></i> مقایسه سبک1</span></div>
                         <!--End Breadcrumbs-->
                     </div>

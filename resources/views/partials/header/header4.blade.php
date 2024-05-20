@@ -2,12 +2,13 @@
     <div class="container-fluid">
         <div class="row">
             <!--Menu-->
-            <div class="col-1 col-sm-1 col-md-1 col-lg-5 align-self-center d-menu-col hdr-menu-left menu-position-left">
+            <x-desktop-menu :alias="'main_menu'" style="4" />
+            {{-- <div class="col-1 col-sm-1 col-md-1 col-lg-5 align-self-center d-menu-col hdr-menu-left menu-position-left">
                 <nav class="navigation" id="AccessibleNav">
                     <ul id="siteNav" class="site-nav medium left">
                         <li class="lvl1 parent dropdown"><a href="#">صفحه اصلی <i class="icon anm anm-angle-down-l"></i></a>
                             <ul class="dropdown">
-                                <li><a href="index.html" class="site-nav lvl-2">صفحه اصلی 01 - مد</a></li>
+                                <li><a href="/home" class="site-nav lvl-2">صفحه اصلی 01 - مد</a></li>
                                 <li><a href="index2-footwear.html" class="site-nav lvl-2">صفحه اصلی 02 - کفش</a></li>
                                 <li><a href="index3-bags.html" class="site-nav lvl-2">صفحه اصلی 03 - کیف</a></li>
                                 <li><a href="index4-electronic.html" class="site-nav lvl-2">صفحه اصلی 04 - الکترونیک</a></li>
@@ -50,7 +51,7 @@
                                     </li>
                                     <li class="lvl-1 col-md-3 col-lg-3 w-22"><a href="#;" class="site-nav lvl-1 menu-title">خرید صفحه دیگر</a>
                                         <ul class="subLinks">
-                                            <li class="lvl-2"><a href="wishlist-style1.html" class="site-nav lvl-2">سبک لیست علاقه مندی1</a></li>
+                                            <li class="lvl-2"><a href="{{ route('favorites') }}" class="site-nav lvl-2">سبک لیست علاقه مندی1</a></li>
                                             <li class="lvl-2"><a href="wishlist-style2.html" class="site-nav lvl-2">سبک لیست علاقه مندی 2</a></li>
                                             <li class="lvl-2"><a href="compare-style1.html" class="site-nav lvl-2">مقایسه سبک 1</a></li>
                                             <li class="lvl-2"><a href="compare-style2.html" class="site-nav lvl-2">مقایسه سبک 2</a></li>
@@ -77,157 +78,14 @@
                                 </ul>
                             </div>
                         </li>
-                        <li class="lvl1 parent megamenu"><a href="#">محصول <i class="icon anm anm-angle-down-l"></i></a>
-                            <div class="megamenu style2">
-                                <ul class="row mmWrapper">
-                                    <li class="lvl-1 col-md-3 col-lg-3"><a href="#;" class="site-nav lvl-1 menu-title">صفحه محصول</a>
-                                        <ul class="subLinks">
-                                            <li class="lvl-2"><a href="product-layout1.html" class="site-nav lvl-2">طرح بندی محصول1</a></li>
-                                            <li class="lvl-2"><a href="product-layout2.html" class="site-nav lvl-2">طرح بندی محصول 2</a></li>
-                                            <li class="lvl-2"><a href="product-layout3.html" class="site-nav lvl-2">طرح بندی محصول 3</a></li>
-                                            <li class="lvl-2"><a href="product-layout4.html" class="site-nav lvl-2">طرح بندی محصول 4</a></li>
-                                            <li class="lvl-2"><a href="product-layout5.html" class="site-nav lvl-2">طرح بندی محصول 5</a></li>
-                                            <li class="lvl-2"><a href="product-layout6.html" class="site-nav lvl-2">طرح بندی محصول6</a></li>
-                                            <li class="lvl-2"><a href="product-layout7.html" class="site-nav lvl-2">طرح بندی محصول 7</a></li>
-                                            <li class="lvl-2"><a href="product-3d-ar-models.html" class="site-nav lvl-2">محصولات سه بعدی، مدل های واقعیت افزوده</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="lvl-1 col-md-3 col-lg-3"><a href="#;" class="site-nav lvl-1 menu-title">انواع صفحه محصول</a>
-                                        <ul class="subLinks">
-                                            <li class="lvl-2"><a href="product-standard.html" class="site-nav lvl-2">محصول استاندارد</a></li>
-                                            <li class="lvl-2"><a href="product-variable.html" class="site-nav lvl-2">محصول متغیر</a></li>
-                                            <li class="lvl-2"><a href="product-grouped.html" class="site-nav lvl-2">محصول گروهی</a></li>
-                                            <li class="lvl-2"><a href="product-layout4.html" class="site-nav lvl-2">محصول در انبار موجود است</a></li>
-                                            <li class="lvl-2"><a href="product-layout6.html" class="site-nav lvl-2">آکاردئون محصول</a></li>
-                                            <li class="lvl-2"><a href="product-layout7.html" class="site-nav lvl-2">برگه‌های محصول سمت چپ</a></li>
-                                            <li class="lvl-2"><a href="product-layout6.html" class="site-nav lvl-2">دسته محصول</a></li>
-                                            <li class="lvl-2"><a href="product-360-view.html" class="site-nav lvl-2">نمایش محصول 360</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="lvl-1 col-md-3 col-lg-6 product-col"><a href="#;" class="site-nav lvl-1 menu-title">پرفروش های هفتگی</a>
-                                        <div class="grid-products weekly-product gp10 mt-1">
-                                            <div class="item">
-                                                <div class="product-wrap position-relative">
-                                                    <!-- شروع تصویر محصول -->
-                                                    <div class="product-image mb-0">
-                                                        <a href="product-layout1.html" class="product-img"><img class="blur-up lazyload" data-src="{{ asset('storage/images/products/electronic-product1.jpg')}}" src="{{ asset('storage/images/products/electronic-product1.jpg')}}" alt="محصول" title="محصول" width="625" height="625" /></a>
-                                                        <div class="product-labels radius"><span class="lbl on-sale">فروش</span></div>
-                                                    </div>
-                                                    <!-- تصویر محصول نهایی --><!-- شروع جزئیات محصول -->
-                                                     <div class="product-details text-center">
-                                                        <div class="product-name"><a class="fw-normal" href="product-layout1.html">دوربین دیجیتال SLR</a></div>
-                                                        <div class="product-price">
-                                                            <span class="price old-price">114.00 تومان  </span><span class="price">99.00 تومان  </span>
-                                                        </div>
-                                                        <div class="product-review">
-                                                            <i class="icon anm anm-star"></i><i class="icon anm anm-star"></i><i class="icon anm anm-star"></i><i class="icon anm anm-star"></i><i class="icon anm anm-star-o"></i>
-                                                            <span class="caption hidden ms-1">3 نظر</span>
-                                                        </div>
-                                                    </div>
-                                                    <!-- جزئیات محصول نهایی -->
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="product-wrap position-relative">
-                                                    <!-- شروع تصویر محصول -->
-                                                    <div class="product-image mb-0">
-                                                        <a href="product-layout1.html" class="product-img"><img class="blur-up lazyload" data-src="{{ asset('storage/images/products/electronic-product2.jpg')}}" src="{{ asset('storage/images/products/electronic-product2.jpg')}}" alt="محصول" title="محصول" width="625" height="625" /></a>
-                                                    </div>
-                                                    <!-- تصویر محصول نهایی -->
-                                                    <!-- شروع جزئیات محصول -->
-                                                    <div class="product-details text-center">
-                                                        <div class="product-name"><a class="fw-normal" href="product-layout1.html">دوربین فوری Instax</a></div>
-                                                        <div class="product-price">
-                                                            <span class="price">165.00 تومان  </span>
-                                                        </div>
-                                                        <div class="product-review">
-                                                            <i class="icon anm anm-star"></i><i class="icon anm anm-star"></i><i class="icon anm anm-star"></i><i class="icon anm anm-star"></i><i class="icon anm anm-star"></i>
-                                                            <span class="caption hidden ms-1">13 نظر</span>
-                                                        </div>
-                                                    </div>
-                                                    <!-- جزئیات محصول نهایی -->
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="product-wrap position-relative">
-                                                    <!-- شروع تصویر محصول -->
-                                                    <div class="product-image mb-0">
-                                                        <a href="product-layout1.html" class="product-img"><img class="blur-up lazyload" data-src="{{ asset('storage/images/products/electronic-product3.jpg')}}" src="{{ asset('storage/images/products/electronic-product3.jpg')}}" alt="محصول" title="محصول" width="625" height="625" /></a>
-                                                    </div>
-                                                    <!-- تصویر محصول نهایی --><!-- شروع جزئیات محصول -->
-                                                     <div class="product-details text-center">
-                                                        <div class="product-name"><a class="fw-normal" href="product-layout1.html">دوربین بدون آینه EOS</a></div>
-                                                        <div class="product-price">
-                                                            <span class="price">153.00 تومان  </span>
-                                                        </div>
-                                                        <div class="product-review">
-                                                            <i class="icon anm anm-star"></i><i class="icon anm anm-star"></i><i class="icon anm anm-star"></i><i class="icon anm anm-star-o"></i><i class="icon anm anm-star-o"></i>
-                                                            <span class="caption hidden ms-1">17 نظر</span>
-                                                        </div>
-                                                    </div>
-                                                    <!-- جزئیات محصول نهایی -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="lvl1 parent dropdown"><a href="#">صفحات <i class="icon anm anm-angle-down-l"></i></a>
-                            <ul class="dropdown">
-                                <li><a href="aboutus-style1.html" class="site-nav">درباره ما <i class="icon anm anm-angle-left-l"></i></a>
-                                    <ul class="dropdown">
-                                        <li><a href="aboutus-style1.html" class="site-nav">درباره ما سبک1</a></li>
-                                        <li><a href="aboutus-style2.html" class="site-nav">درباره ما سبک2</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="contact-style1.html" class="site-nav">تماس با ما <i class="icon anm anm-angle-left-l"></i></a>
-                                    <ul class="dropdown">
-                                        <li><a href="contact-style1.html" class="site-nav">تماس با ما سبک1</a></li>
-                                        <li><a href="contact-style2.html" class="site-nav">تماس با ما سبک2</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="my-account.html" class="site-nav">حساب من <i class="icon anm anm-angle-left-l"></i></a>
-                                    <ul class="dropdown">
-                                        <li><a href="my-account.html" class="site-nav">حساب من</a></li>
-                                        <li><a href="login.html" class="site-nav">ورود به سیستم</a></li>
-                                        <li><a href="register.html" class="site-nav">ثبت نام</a></li>
-                                        <li><a href="forgot-password.html" class="site-nav">گذرواژه را فراموش کرده‌اید</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="lookbook-grid.html" class="site-nav">کتاب نگاه <i class="icon anm anm-angle-left-l"></i></a>
-                                    <ul class="dropdown">
-                                        <li><a href="lookbook-grid.html" class="site-nav">شبکه لوک بوک</a></li>
-                                        <li><a href="lookbook-masonry.html" class="site-nav">ماسونری لوک بوک</a></li>
-                                        <li><a href="lookbook-shop.html" class="site-nav">فروشگاه لوک بوک</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="portfolio-page.html" class="site-nav">صفحه نمونه کارها</a></li>
-                                <li><a href="faqs-page.html" class="site-nav">صفحه پرسش‌های متداول</a></li>
-                                <li><a href="brands-page.html" class="site-nav">صفحه برندها</a></li>
-                                <li><a href="cms-page.html" class="site-nav">صفحه CMS</a></li>
-                                <li><a href="elements-icons.html" class="site-nav">نمادها</a></li>
-                                <li><a href="error-404.html" class="site-nav">خطای 404</a></li>
-                                <li><a href="coming-soon.html" class="site-nav">به زودی <span class="lbl nm_label2">جدید</span></a></li>
-                            </ul>
-                        </li>
-                        <li class="lvl1 parent dropdown"><a href="#">وبلاگ <i class="icon anm anm-angle-down-l"></i></a>
-                            <ul class="dropdown">
-                                <li><a href="blog-grid.html" class="site-nav">نمایش شبکه</a></li>
-                                <li><a href="blog-list.html" class="site-nav">نمایش فهرست</a></li>
-                                <li><a href="blog-grid-sidebar.html" class="site-nav">نوار کناری راست</a></li>
-                                <li><a href="blog-list-sidebar.html" class="site-nav">نوار کناری سمت چپ</a></li>
-                                <li><a href="blog-masonry.html" class="site-nav">شبکه ماسونری</a></li>
-                                <li><a href="blog-details.html" class="site-nav">جزئیات وبلاگ</a></li>
-                            </ul>
-                        </li>
+
                     </ul>
                 </nav>
-            </div>
+            </div> --}}
             <!--End Menu-->
             <!--Logo-->
             <div class="logo col-4 col-sm-4 col-md-4 col-lg-2 align-self-center">
-                <a class="logoImg" href="index.html">
+                <a class="logoImg" href="/home">
                     <img class="mx-lg-auto default-logo" src="{{ asset('storage/images/logo-white.png')}}" alt="قالب  چند منظوره هما" title="قالب  چند منظوره هما" width="149" height="39" />
                     <span class="logo-txt d-none">هما</span>
                 </a>
@@ -247,11 +105,12 @@
                                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                             </div>
                             <div class="search-body">
-                                <form class="form minisearch" id="header-search" action="#" method="get">
+                                <form class="form minisearch" id="header-search" action="{{ route('search') }}" method="post">
+                                    @csrf
                                     <!--فیلد جستجو-->
                                     <div class="d-flex searchField">
-                                        <div class="search-category">
-                                            <select class="rgsearch-category rounded-end-0">
+                                        <div class="search-category d-none">
+                                            <select class="rgsearch-category rounded-end-0"  name="category">
                                                 <option value="0">همه دسته ها</option>
                                                 <option value="1">- همه</option>
                                                 <option value="2">- مد</option>
@@ -264,13 +123,13 @@
                                             </select>
                                         </div>
                                         <div class="input-box d-flex fl-1">
-                                            <input type="text" class="input-text border-start-0 border-end-0" placeholder="جستجوی محصولات..." value="" />
+                                            <input type="text" name="q" class="input-text border-start-0 border-end-0" placeholder="جستجوی محصولات..." value="" />
                                             <button type="submit" class="action search d-flex-justify-center btn btn-primary rounded-start-0"><i class="icon anm anm-search-l"></i></button>
                                         </div>
                                     </div>
                                     <!--پایان فیلد جستجو-->
                                     <!--جستجوی محبوب-->
-                                    <div class="popular-searches d-flex-justify-center mt-3">
+                                    <div class="popular-searches d-flex-justify-center mt-3 d-none">
                                         <span class="title fw-600">در حال حاضر پرطرفدار:</span>
                                         <div class="d-flex-wrap searches-items">
                                             <a class="text-link me-2" href="#">دوربین</a>
@@ -280,7 +139,7 @@
                                     </div>
                                     <!--پایان جستجوی محبوب-->
                                     <!--جستجوی محصولات-->
-                                    <div class="search-products">
+                                    <div class="search-products  d-none">
                                         <ul class="items g-2 g-md-3 row row-cols-lg-4 row-cols-md-3 row-cols-sm-2">
                                             <li class="item vala w-100 text-center text-muted d-none">شما هیچ موردی در جستجوی خود ندارید.</li>
                                             <li class="item">
@@ -337,23 +196,23 @@
                     <div id="accountBox">
                         <div class="customer-links">
                             <ul class="m-0">
-                                <li><a href="login.html"><i class="icon anm anm-sign-in-al"></i>ورود به سیستم</a></li>
-                                <li><a href="register.html"><i class="icon anm anm-user-al"></i>ثبت نام</a></li>
-                                <li><a href="my-account.html"><i class="icon anm anm-user-cil"></i>حساب من</a></li>
-                                <li><a href="wishlist-style1.html"><i class="icon anm anm-heart-l"></i>لیست آرزوها</a></li>
-                                <li><a href="compare-style1.html"><i class="icon anm anm-random-r"></i>مقایسه</a></li>
-                                <li><a href="login.html"><i class="icon anm anm-sign-out-al"></i>خروج از سیستم</a></li>
+                                <li><a href="{{ route('login') }}"><i class="icon anm anm-sign-in-al"></i>ورود به سیستم</a></li>
+                                <li><a href="{{ route('register') }}"><i class="icon anm anm-user-al"></i>ثبت نام</a></li>
+                                <li><a href="{{ route('dashboard.home') }}"><i class="icon anm anm-user-cil"></i>حساب من</a></li>
+                                <li><a href="{{ route('favorites') }}"><i class="icon anm anm-heart-l"></i>لیست آرزوها</a></li>
+                                {{-- <li><a href="compare-style1.html"><i class="icon anm anm-random-r"></i>مقایسه</a></li> --}}
+                                <li><a href="{{ route('logout') }}"><i class="icon anm anm-sign-out-al"></i>خروج از سیستم</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <!--End Account-->
                 <!--Wishlist-->
-                <div class="wishlist-link iconset" title="علاقه مندی"><a href="wishlist-style1.html"><i class="hdr-icon icon anm anm-heart-l"></i><span class="wishlist-count">5</span></a></div>
+                <div class="wishlist-link iconset" title="علاقه مندی"><a href="{{ route('favorites') }}"><i class="hdr-icon icon anm anm-heart-l"></i><span class="wishlist-count">5</span></a></div>
                 <!--End Wishlist-->
                 <!--Minicart-->
                 <div class="header-cart iconset" title="سبدخرید">
-                    <a href="#;" class="header-cart btn-minicart clr-none" data-bs-toggle="offcanvas" data-bs-target="#minicart-drawer"><i class="hdr-icon icon anm anm-basket-l"></i><span class="cart-count">2</span></a>
+                    <a href="#;" class="header-cart btn-minicart clr-none" data-bs-toggle="offcanvas" data-bs-target="#minicart-drawer"><i class="hdr-icon icon anm anm-basket-l"></i><span class="cart-count  d-none">{{$cartCount}}</span></a>
                 </div>
                 <!--End Minicart-->
                 <!--Mobile Toggle-->

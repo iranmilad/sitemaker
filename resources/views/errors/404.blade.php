@@ -123,7 +123,7 @@
                                         class="icon anm anm-search-l"></i></button>
                             </div>
                         </form>
-                        <p class="same-width-btn"><a href="index.html"
+                        <p class="same-width-btn"><a href="/home"
                                 class="btn btn-secondary btn-lg mb-2 mx-3">برگشت</a><a href=" shop-left-sidebar.html"
                                 class="btn btn-lg mb-2">ادامه خرید</a></p>
                     </div>

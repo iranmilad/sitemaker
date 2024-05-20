@@ -15,7 +15,7 @@
                             <h1>سفارش موفقیت</h1>
                         </div>
                         <!--Breadcrumbs-->
-                        <div class="breadcrumbs"><a href="index.html" title="Back to the home page">صفحه اصلی</a><span
+                        <div class="breadcrumbs"><a href="/home" title="Back to the home page">صفحه اصلی</a><span
                                 class="main-title"><i class="icon anm anm-angle-left-l"></i>دستور موفقیت</span></div>
                         <!--End Breadcrumbs-->
                     </div>
@@ -210,7 +210,7 @@
 
                     <!--Order Delivery-->
                     <div class="d-flex-wrap w-100 mt-4 text-center">
-                        <a href="index.html"
+                        <a href="/home"
                             class="d-inline-flex align-items-center btn btn-outline-primary me-2 mb-2 me-sm-3"><i
                                 class="me-2 icon an-angle-left-r"></i>به خرید ادامه دهید</a>
                         <button type="button" class="d-inline-flex align-items-center btn me-2 mb-2 me-sm-3"><i

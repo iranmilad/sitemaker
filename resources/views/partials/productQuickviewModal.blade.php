@@ -121,7 +121,7 @@
                             </div>
                         </form>
                         <div class="wishlist-btn d-flex-center">
-                            <a class="add-wishlist d-flex-center me-3" href="wishlist-style1.html" title="افزودن به علاقه مندی ها"><i class="icon anm anm-heart-l me-1"></i> <span>افزودن به علاقه مندی ها</span></a>
+                            <a class="add-wishlist d-flex-center me-3" href="{{ route('favorites') }}" title="افزودن به علاقه مندی ها"><i class="icon anm anm-heart-l me-1"></i> <span>افزودن به علاقه مندی ها</span></a>
                             <a class="add-compare d-flex-center" href="compare-style1.html" title="افزودن به مقایسه"><i class="icon anm anm-random-r ms-2"></i> <span>افزودن به مقایسه</span></a>
                         </div>
                         <!-- Social Sharing -->
