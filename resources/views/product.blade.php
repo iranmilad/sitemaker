@@ -107,10 +107,14 @@
                             <h2 class="product-main-title">{{$product->title}}</h2>
                             <!-- Product Reviews -->
                             <div class="product-review d-flex-center mb-3">
-                                <div class="reviewStar d-flex-center"><i class="icon anm anm-star"></i><i
-                                        class="icon anm anm-star"></i><i class="icon anm anm-star"></i><i
-                                        class="icon anm anm-star"></i><i class="icon anm anm-star-o"></i><span
-                                        class="caption me-2">{{count($product->reviews)}}  دیدگاه</span></div>
+                                <div class="reviewStar d-flex-center">
+                                    <i class="icon anm anm-star"></i>
+                                    <i class="icon anm anm-star"></i>
+                                    <i class="icon anm anm-star"></i>
+                                    <i class="icon anm anm-star"></i>
+                                    <i class="icon anm anm-star-o"></i>
+                                    <span class="caption me-2">{{count($product->reviews)}}  دیدگاه</span>
+                                </div>
                                 <a class="reviewLink d-flex-center" href="#reviews">یک نظر بنویسید</a>
                             </div>
                             <!-- End Product Reviews -->

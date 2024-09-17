@@ -5,6 +5,7 @@ namespace App\Models;
 use Morilog\Jalali\Jalalian;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Log;
 
 class Order extends Model
 {
@@ -29,11 +30,12 @@ class Order extends Model
         'shipping_address',
         'shipping_postal_code',
         'shipping_phone',
+        'shipping_note',
+        'shipping_admin_note',
         // اضافه کردن فیلد کد تخفیف
         'discount_code_id',
         'deliveryType',
     ];
-
 
     public function user()
     {
@@ -50,6 +52,10 @@ class Order extends Model
         return $this->belongsTo(Payment::class);
     }
 
+    public function settlementDocuments()
+    {
+        return $this->hasMany(SettlementDocument::class);
+    }
 
     public function orderItems()
     {
@@ -78,7 +84,6 @@ class Order extends Model
             ->sum('checks.sum_amount');
     }
 
-
     /**
      * Get the total amount of unpaid checks for the order.
      *
@@ -90,7 +95,6 @@ class Order extends Model
             ->where('payment_status', 'unpaid')
             ->sum('amount');
     }
-
 
     /**
      * Convert Create at date from Gregorian to Jalali (Shamsi).
@@ -109,7 +113,6 @@ class Order extends Model
         return $jalaliDate->format('Y/m/d');
     }
 
-
     /**
      * Convert delivery date from Gregorian to Jalali (Shamsi).
      *
@@ -127,73 +130,108 @@ class Order extends Model
         return $jalaliDate->format('Y/m/d');
     }
 
-
-
-    public function basket(){
-        $status =[];
+    public function basket()
+    {
+        $status = [];
         $cartCount = 0; // Initialize cart count
         $totalPrice = 0; // Initialize total price
         $availableCreditPlan = 0;
         $items = []; // Initialize cart items array
-        $attributeNames = [];
-        $options = [];
-        $totalDiscountPrice =0;
-        $summedAmounts=[];
+        $summedAmounts = [];
+        $totalDiscount = 0; // Initialize total discount
+        $totalTime = 0; // Initialize total time
         $order = $this;
 
-
-        if($order){
-
+        if ($order) {
             $cartItems = $order->orderItems;
 
+            // بررسی و اعمال کد تخفیف
+            $discountCode = $order->discountCode; // دریافت کد تخفیف مربوط به سفارش
 
-            foreach ($cartItems as  $cartItem) {
+            // لیست محصولات مجاز و غیر مجاز برای کد تخفیف
+            $allowedProducts = $discountCode ? $discountCode->allowedProducts->pluck('id')->toArray() : [];
 
+            foreach ($cartItems as $cartItem) {
                 $totalAttributePrice = 0;
-                $totalAttributeSalePrice =0;
+                $totalAttributeSalePrice = 0;
 
-                // Assuming the product ID is provided as 'product'
                 $product = $cartItem->product;
-                // order item status
-                $status[]= $cartItem->status;
-
+                $status[] = $cartItem->status;
 
                 if ($product) {
-                    //check review exist for this product
                     $review = $order->user->existsProductReview($product->id);
+                    $attributeCombinations = $cartItem->combinations; // دریافت ترکیبات ویژگی‌ها از متد combinations
 
-                    $attributes = $cartItem->orderAttributeItems;
-                    // Extract quantity from the item using regular expressions
-                    $quantity =  $cartItem->quantity;
-                    $cartCount += $quantity;
-
-                    // Extract attribute items for the product
-
-                    foreach($attributes as $attributeItem){
-
-                        $priceAttr = $attributeItem->sale_price ?? $attributeItem->price ;
-                        if (!is_null($priceAttr)){
-                            $attributeNames[] = $attributeItem->name;
-                            $totalAttributeSalePrice += $priceAttr;
-                            $totalAttributePrice += $attributeItem->price ;
-                            $options[] = [$attributeItem->name =>$attributeItem->value];
-                        }
-
-
+                    $quantity = $cartItem->quantity;
+                    if ($product->minimum_quantity == "quantity") {
+                        $cartCount += $quantity;
+                    } else {
+                        $cartCount += 1;
                     }
 
-                    // Check if the product has a sale price
-                    $price = $product->sale_price ?? $product->price;
+                    $attributeNames = [];
+                    $options = [];
+                    $timePerUnit = 0; // Initialize time per unit for current item
 
-                    $totalProductPrice= ($price + $totalAttributeSalePrice ) * $quantity;
-                    $totalPrice += $totalProductPrice;
+                    foreach ($attributeCombinations as $attributeCombination) {
+                        $priceAttr = $attributeCombination->sale_price ?? $attributeCombination->price;
+                        $totalAttributePrice += $priceAttr;
+                        foreach ($attributeCombination->attributeProperties as $attributeProperty) {
+                            if (!is_null($attributeProperty->attribute->name)) {
+                                $attributeNames[] = $attributeProperty->attribute->name;
+                                $options[] = [$attributeProperty->attribute->name => $attributeProperty->property->value];
+                            }
+                        }
 
+                        // جمع زمان هر واحد برای این ترکیب
+                        $timePerUnit += $attributeCombination->time_per_unit ?? 0;
+                    }
 
-                    $credit=$product->creditInstallmentTimeline($totalProductPrice);
+                    // محاسبه زمان کل برای این آیتم
+                    $timeTotal = $timePerUnit * $quantity;
+                    $totalTime += $timeTotal;
+
+                    $totalPrice += $cartItem->total * $quantity;
+
+                    // محاسبه تخفیف بر اساس نوع کد تخفیف
+                    if ($discountCode) {
+                        $applyDiscount = false;
+
+                        // بررسی اینکه محصول جزو محصولات مجاز است
+                        if (!empty($allowedProducts) && in_array($product->id, $allowedProducts) || empty($allowedProducts)) {
+                            $applyDiscount = true;
+                        }
+
+                        // محاسبه تخفیف بر اساس نوع تخفیف
+                        if ($applyDiscount) {
+                            switch ($discountCode->discount_type) {
+                                case 'percentage_cart':
+                                    // تخفیف درصدی روی کل سبد خرید
+                                    $totalDiscount += $totalPrice * ($discountCode->discount_amount / 100);
+                                    break;
+
+                                case 'percentage_product':
+                                    // تخفیف درصدی روی محصولات خاص
+                                    $totalDiscount += $cartItem->total * ($discountCode->discount_amount / 100) * $quantity;
+                                    break;
+
+                                case 'fixed_cart':
+                                    // تخفیف ثابت روی کل سبد خرید (برای کل سبد تنها یکبار تخفیف اعمال می‌شود)
+                                    $totalDiscount = $discountCode->discount_amount; // فقط یکبار اعمال می‌شود
+                                    break;
+
+                                case 'fixed_product':
+                                    // تخفیف ثابت روی محصولات خاص
+                                    $totalDiscount += $discountCode->discount_amount * $quantity; // تخفیف ثابت برای هر واحد محصول
+                                    break;
+                            }
+                        }
+                    }
+
+                    $credit = $product->creditInstallmentTimeline($cartItem->total);
                     $productTimeline = $credit->timeline;
 
                     foreach ($productTimeline as $key => $value) {
-                        // اگر مقدار مشابه وجود داشته باشد، به آن اضافه شود، در غیر این صورت ایجاد شود
                         if (isset($summedAmounts[$key])) {
                             $summedAmounts[$key] += $value->amount;
                         } else {
@@ -202,15 +240,15 @@ class Order extends Model
                     }
 
                     $availableCreditPlan += $credit->totalCredit;
-                    // Add product details to the items array
+
                     $items[] = (object)[
-                        "id" => $cartItem->id,        //order id
+                        "id" => $cartItem->id,
                         "product_id" => $product->id,
                         "name" => $product->title,
                         "img" => $product->img,
                         "link" => $product->link,
-                        "price" => $product->price + $totalAttributePrice,
-                        "sale_price"  => $product->sale_price + $totalAttributeSalePrice,
+                        "price" => $cartItem->price,
+                        "sale_price" => $cartItem->sale_price,
                         "discountPercentage" => $product->discountPercentage,
                         "review" => $review,
                         "status" => $cartItem->status,
@@ -219,7 +257,7 @@ class Order extends Model
                         "attribute" => $attributeNames,
                         "credit" => $credit,
                         "service" => $product->service,
-                        "services" =>(object) [
+                        "services" => (object)[
                             "sewing" => $product->services()->where('type', 'sewing')->first(),
                             "installer" => $product->services()->where('type', 'installer')->first(),
                             "design" => $product->services()->where('type', 'design')->first(),
@@ -227,64 +265,66 @@ class Order extends Model
                         "installer" => $cartItem->installer ?? null,
                         "sewing" => $cartItem->sewing ?? null,
                         "design" => $cartItem->design ?? null,
-                        "total" => ($product->sale_price ?? $product->price + $totalAttributeSalePrice ) * $quantity  , // Calculate total price for each item
+                        "total" => $cartItem->total,
+                        "time_per_unit" => $timePerUnit, // زمان هر واحد
+                        "time_total" => $timeTotal, // زمان کل
                     ];
                 }
-
             }
 
-
-            // ایجاد timeline کلی با مقادیر جمع شده
-
-            $totalTimeline=$this->calculateDueDates($summedAmounts);
-
-            $availableCreditPlan=($order->paymentMethod=='credit') ? $availableCreditPlan :0;
-            $availableCheck = ($order->paymentMethod=='check') ? $order->getTotalUnpaidChecksAmount() :0;
-
+            $totalTimeline = $this->calculateDueDates($summedAmounts);
+            $availableCreditPlan = ($order->paymentMethod == 'credit') ? $availableCreditPlan : 0;
+            $availableCheck = ($order->paymentMethod == 'check') ? $order->getTotalUnpaidChecksAmount() : 0;
             $deliveryCost = $this->deliveryCost($order);
 
-            $orders =(object) [
-                "cart" =>(object) [
+            // محاسبه مبلغ نهایی قابل پرداخت با در نظر گرفتن تخفیف
+            $totalPayed = $totalPrice + $deliveryCost - $availableCreditPlan - $availableCheck - $totalDiscount;
+
+            $orders = (object)[
+                "cart" => (object)[
                     "id" => $order->id,
                     "count" => $cartCount,
                     "status" => $status,
-                    "orderStatus" => $order->status ,
-                    "total" => number_format($totalPrice), // Format the total price
-                    'deliveryType' => $order->deliveryType ,
+                    "orderStatus" => $order->status,
+                    "total" => number_format($totalPrice),
+                    'deliveryType' => $order->deliveryType,
+                    'discount_amount' => number_format($totalDiscount), // نمایش مبلغ تخفیف
                     'paymentMethod' => $order->paymentMethod,
-                    'deliveryCost' => $deliveryCost,
+                    'deliveryCost' => number_format($deliveryCost),
                     'availableCreditPlan' => number_format($availableCreditPlan),
-                    "availableCheck"  => number_format($availableCheck),
-                    'totalTimeline'  => $totalTimeline,
+                    "availableCheck" => number_format($availableCheck),
+                    'totalTimeline' => $totalTimeline,
                     'totalCheckTimeline' => $order->checks,
-                    'createdAtDate' => $this->gregorianToJalalian($order->created_at_date), // order date
-                    "totalPayed" => number_format($totalPrice + $totalDiscountPrice + $deliveryCost - $availableCreditPlan -$availableCheck ),
+                    'createdAtDate' => $this->gregorianToJalalian($order->created_at_date),
+                    "totalPayed" => number_format($totalPayed), // نمایش مبلغ نهایی قابل پرداخت
+                    'totalTime' => number_format($totalTime), // نمایش زمان کل
+                    'time_delivery' => round($totalTime/24)+2,
                 ],
-                "items" => $items, // Add items to the response
+                "items" => $items,
             ];
-        }
-        else{
-            $orders =(object) [
-                "cart" =>(object) [
+        } else {
+            $orders = (object)[
+                "cart" => (object)[
                     "count" => $cartCount,
                     "status" => [],
-                    "orderStatus" => $order->status ,
-                    "total" => 0, // Format the total price
-                    'deliveryType' => 'cash' ,
+                    "orderStatus" => $order->status,
+                    "total" => 0,
+                    'deliveryType' => 'cash',
+                    'discount_amount' => 0,
                     'paymentMethod' => 'cash',
                     'deliveryCost' => 0,
                     'availableCreditPlan' => 0,
-                    "availableCheck"  => 0,
-                    'totalTimeline'  => [],
+                    "availableCheck" => 0,
+                    'totalTimeline' => [],
                     'totalCheckTimeline' => [],
                     'createdAtDate' => '',
                     "totalPayed" => 0,
+                    'totalTime' => 0, // زمان کل
+                    'time_delivery' => 2,
                 ],
-                "items" => [], // Add items to the response
+                "items" => [],
             ];
         }
-
-
 
         return $orders;
     }
@@ -306,7 +346,6 @@ class Order extends Model
 
     }
 
-
     /**
      * Convert date from Gregorian to Jalali (Shamsi).
      *
@@ -323,7 +362,6 @@ class Order extends Model
         // Format the date as desired
         return $jalaliDate->format('Y/m/d');
     }
-
 
     private function calculateDueDates(array $summedAmounts): array
     {
@@ -347,14 +385,189 @@ class Order extends Model
         return $totalTimeline;
     }
 
+    private function deliveryCost($order)
+    {
+        if ($order->deliveryType == 'home_delivery') {
+            if ($order->shipping_city && $order->shipping_province) {
+                // دریافت تمامی مناطق حمل‌ونقل
+                $transportRegions = TransportRegion::all();
 
-    private function deliveryCost($order){
-        if($order->deliveryType=='home_delivery'){
-            return 250000;
+                // متغیر جمع هزینه نهایی
+                $totalCost = 0;
+
+                // محاسبه هزینه برای هر آیتم موجود در سفارش
+                foreach ($order->orderItems as $orderItem) {
+                    $product = $orderItem->product;
+                    $cartValue = $orderItem->total;
+                    $weight = $product->weight;
+                    $dimensions = [
+                        'length' => $product->length,
+                        'width' => $product->width,
+                        'height' => $product->height,
+                    ];
+
+                    // بررسی تطابق شهر و استان با مناطق موجود
+                    foreach ($transportRegions as $region) {
+                        // اگر regions خالی بود، منظور همه مناطق است
+                        if ($region->regions==[] || in_array($order->shipping_city, $region->regions)) {
+                            // مطابقت نوع هزینه حمل‌ونقل با محصول
+                            if ($region->cost_type == $product->cost_calculation_class) {
+                                switch ($region->cost_type) {
+                                    case 'fixed_rate':
+                                        $totalCost += $region->price; // هزینه ثابت
+                                        break;
+
+                                    case 'weight_based':
+                                        $totalCost += $this->calculateWeightBasedCost($region, $weight); // محاسبه براساس وزن
+                                        break;
+
+                                    case 'volume_based':
+                                        $totalCost += $this->calculateVolumeBasedCost($region, $dimensions); // محاسبه براساس حجم
+                                        break;
+
+                                    case 'value_based':
+                                        $totalCost += $this->calculateValueBasedCost($region, $cartValue); // محاسبه براساس ارزش
+                                        break;
+
+                                    default:
+                                        $totalCost += 0; // اگر نوع حمل‌ونقل مشخص نبود، هزینه صفر
+                                }
+                                // یک منطقه تطابق یافت، ادامه نمی‌دهیم
+                                break;
+                            }
+                        }
+                    }
+                }
+                return $totalCost;
+            }
         }
-        else{
-            return 0;
+
+        // اگر منطقه‌ای یافت نشود یا اطلاعات نامعتبر باشد، هزینه ارسال صفر برمی‌گردد
+        return 0;
+    }
+
+
+    private function calculateWeightBasedCost($region, $weight)
+    {
+        return $region->weight_based_cost * $weight;
+    }
+
+    private function calculateValueBasedCost($region, $cartValue)
+    {
+        return $region->percentage_of_cart_value * $cartValue;
+    }
+
+    private function calculateVolumeBasedCost($region, $dimensions)
+    {
+        $volume = $dimensions['length'] * $dimensions['width'] * $dimensions['height'];
+        return $region->dimension_based_cost * $volume;
+    }
+
+
+    public function getTotalChecksCount()
+    {
+        return $this->checks()->count();
+    }
+
+    public function getPaidChecksCount()
+    {
+        return $this->checks()->where('payment_status', 'paid')->count();
+    }
+
+    public function getLastCheckPaymentDate()
+    {
+        // برگرداندن آخرین تاریخ پرداخت چک، اگر چکی با وضعیت پرداخت "paid" وجود داشته باشد
+        $lastPaymentDate = $this->checks()
+            ->where('payment_status', 'paid')
+            ->latest('due_date')
+            ->value('due_date');
+
+        // اگر تاریخ پرداخت وجود داشته باشد، آن را به تاریخ شمسی تبدیل کرده و برمی‌گردانیم
+        if ($lastPaymentDate) {
+            return $this->gregorianToJalalian($lastPaymentDate);
         }
+
+        // اگر هیچ چکی با وضعیت "paid" وجود نداشته باشد، null برمی‌گردانیم
+        return null;
+    }
+
+    public function getnextDueDate()
+    {
+        // برگرداندن اولین تاریخ پرداخت چک، اگر چکی با وضعیت پرداخت "unpaid" وجود داشته باشد
+        $firstPaymentDate = $this->checks()
+            ->where('payment_status', 'unpaid')
+            ->first('due_date')
+            ->value('due_date');
+
+        // اگر تاریخ پرداخت وجود داشته باشد، آن را به تاریخ شمسی تبدیل کرده و برمی‌گردانیم
+        if ($firstPaymentDate) {
+            return $this->gregorianToJalalian($firstPaymentDate);
+        }
+
+        // اگر هیچ چکی با وضعیت "unpaid" وجود نداشته باشد، null برمی‌گردانیم
+        return null;
+    }
+
+    public function applyDiscountCode($discountCode)
+    {
+        // بررسی اعتبار کد تخفیف
+        $discount = DiscountCode::where('code', $discountCode)
+                                ->where('status', 'active')
+                                ->where('discount_expire_start', '<=', now())
+                                ->where('discount_expire_end', '>=', now())
+                                ->first();
+
+        if (!$discount) {
+            return [
+                'success' => false,
+                'message' => 'Invalid or expired discount code.'
+            ];
+        }
+
+        // بررسی محدودیت استفاده از کد
+        if ($discount->is_used || ($discount->usage_limit && $discount->usage_count >= $discount->usage_limit)) {
+            return [
+                'success' => false,
+                'message' => 'This discount code has reached its usage limit.'
+            ];
+        }
+
+        // بررسی محصولات مجاز و غیر مجاز
+        $allowedProducts = $discount->allowedProducts->pluck('id')->toArray();
+
+
+        $orderItems = $this->orderItems;
+        $totalDiscount = 0;
+
+        foreach ($orderItems as $item) {
+
+            if ($allowedProducts && !in_array($item->product_id, $allowedProducts)) {
+                continue; // اگر محصولات مجاز وجود داشته باشد و محصول جزو آنها نباشد، تخفیف اعمال نمی‌شود
+            }
+
+            // محاسبه تخفیف
+            if ($discount->discount_type === 'percentage') {
+                $discountAmount = $item->total * ($discount->discount_amount / 100);
+            } else {
+                $discountAmount = $discount->discount_amount;
+            }
+
+            $totalDiscount += $discountAmount;
+        }
+
+        // اعمال تخفیف بر روی کل سفارش
+        $this->discount_code_id = $discount->id;
+        $this->save();
+
+        // بروزرسانی تعداد استفاده از کد تخفیف
+        $discount->usage_count++;
+        $discount->save();
+
+        return [
+            'success' => true,
+            'total_discount' => $totalDiscount,
+            'message' => 'Discount applied successfully.'
+        ];
     }
 
 }

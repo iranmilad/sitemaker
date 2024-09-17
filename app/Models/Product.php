@@ -4,13 +4,8 @@ namespace App\Models;
 
 use App\Traits\Searchable;
 use App\Models\AttributeItem;
-use AutoKit\Components\Cart\Cart;
-use AutoKit\Components\Money\Money;
-use AutoKit\Components\Money\Currency;
-use AutoKit\Components\Money\Exchanger;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
-
-
 
 class Product extends Model
 {
@@ -26,6 +21,7 @@ class Product extends Model
         'fewspd',
         'fewtak',
         'holo_code',
+        'time_per_unit',
         'type',
         'is_top',
         'is_new',
@@ -34,14 +30,47 @@ class Product extends Model
         'service',
         'description',
         'delivery_type',
-        'status'
+        'weight',
+        'length', // اضافه کردن فیلد طول
+        'width',  // اضافه کردن فیلد عرض
+        'height',  // اضافه کردن فیلد ارتفاع
+        'measurement_unit',
+        'transport_type',
+        'cost_calculation_class',
+        'status',
+        'reviews_enabled',
     ];
 
     protected $casts = [
         'is_top' => 'boolean',
         'is_new' => 'boolean',
         'service' => 'boolean',
+        'reviews_enabled' => 'boolean',
     ];
+
+    /**
+     * Accessor for sale_price.
+     * If the user has the 'wholesale' role, return wholesale_price instead of sale_price.
+     *
+     * @return float|null
+     */
+    public function getSalePriceAttribute()
+    {
+        // Check if the user is logged in and has the 'wholesale' role
+        if (Auth::check() && Auth::user()->hasRole('wholesale')) {
+
+            return $this->wholesale_price ?? $this->attributes['sale_price'];
+        }
+
+        // Otherwise, return the regular sale price
+        return $this->attributes['sale_price'];
+    }
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function categories()
     {
@@ -68,10 +97,8 @@ class Product extends Model
         return $this->waitingLists()->where('user_id', $userId)->exists();
     }
 
-
     public function getDiscountPercentageAttribute()
     {
-        // Calculate discount percentage
         if ($this->sale_price && $this->price > 0) {
             return round((($this->price - $this->sale_price) / $this->price) * 100) ."%";
         }
@@ -81,7 +108,8 @@ class Product extends Model
 
     public function isAvailable(): bool
     {
-        // Check if the product is available based on the inventory display type
+        if($this->service) return true;
+
         switch ($this->inventory_display) {
             case 'few':
                 return $this->few > 0;
@@ -92,10 +120,13 @@ class Product extends Model
             default:
                 return false;
         }
+
     }
 
     public function getQuantityAttribute()
     {
+        if($this->service) return true;
+
         switch ($this->inventory_display) {
             case 'few':
                 return $this->few ?? 0;
@@ -104,24 +135,22 @@ class Product extends Model
             case 'fewtak':
                 return $this->fewtak ?? 0;
             default:
-                return 0; // Return 0 if inventory display setting is not specified
+                return 0;
         }
     }
 
     public function getLinkAttribute()
     {
         return ("/product/".$this->id);
-
     }
+
     public function hasMinimumQuantity(): bool
     {
-        // Check if the product has a minimum quantity requirement
         return $this->minimum_quantity !== null && $this->quantity <= $this->minimum_quantity;
     }
 
     public function inventoryMessage(): string
     {
-        // Generate a message based on inventory and minimum quantity
         if ($this->isAvailable()) {
             if ($this->hasMinimumQuantity()) {
                 return "{$this->minimum_quantity} عدد در انبار";
@@ -132,7 +161,6 @@ class Product extends Model
             return 'ناموجود';
         }
     }
-
 
     public function searchTooltips(string $query): array
     {
@@ -150,12 +178,10 @@ class Product extends Model
             ->get();
     }
 
-
     public function images()
     {
         return $this->hasMany(ProductImage::class);
     }
-
 
     public function tags()
     {
@@ -167,13 +193,11 @@ class Product extends Model
         return $this->belongsToMany(Attribute::class, 'attribute_product', 'product_id', 'attribute_id');
     }
 
-    // Define a method to retrieve the first category of the product
     public function firstCategory()
     {
         return $this->categories()->first();
     }
 
-    // Define a static method to retrieve the first category of a product
     public static function getFirstCategory($productId)
     {
         return static::findOrFail($productId)->firstCategory();
@@ -183,7 +207,6 @@ class Product extends Model
     {
         return $this->count();
     }
-
 
     public function calculatePageCount($perPage)
     {
@@ -203,34 +226,33 @@ class Product extends Model
 
     public function overallRatingAverage()
     {
-        return round($this->reviews()->avg('rating'),2);
+        return round($this->reviews()->avg('rating'), 2);
     }
 
     public function qualityRatingAverage()
     {
-        return round($this->reviews()->avg('quality'),2);
+        return round($this->reviews()->avg('quality'), 2);
     }
 
     public function performanceRatingAverage()
     {
-        return round($this->reviews()->avg('performance'),2);
+        return round($this->reviews()->avg('performance'), 2);
     }
 
     public function designRatingAverage()
     {
-        return round($this->reviews()->avg('design'),2);
+        return round($this->reviews()->avg('design'), 2);
     }
 
     public function priceRatingAverage()
     {
-        return round($this->reviews()->avg('price'),2);
+        return round($this->reviews()->avg('price'), 2);
     }
 
     public function easeOfUseRatingAverage()
     {
-        return round($this->reviews()->avg('ease_of_use'),2);
+        return round($this->reviews()->avg('ease_of_use'), 2);
     }
-
 
     public function findAttributeItem($attributeId, $attributeName)
     {
@@ -249,45 +271,31 @@ class Product extends Model
         return $this->belongsToMany(Credit::class);
     }
 
-
-
     public function creditPlanProduct()
     {
         return $this->hasMany(CreditPlanProduct::class);
     }
 
-
     public function creditPlans()
     {
-        return $this->belongsToMany(CreditPlan::class);
+        return $this->belongsToMany(CreditPlan::class, 'credit_plan_products', 'product_id', 'credit_plan_id');
     }
 
-
-    /**
-     * Get the credit installment timeline for the product.
-     *
-     * @param float $totalAmount
-     * @return object
-     */
     public function creditInstallmentTimeline($totalAmount)
     {
-        $creditPlanProduct=$this->creditPlanProduct()->first();
-        if ($creditPlanProduct){
+        $creditPlanProduct = $this->creditPlanProduct()->first();
+        if ($creditPlanProduct) {
             $creditPlan = $creditPlanProduct->creditPlan;
-            $numberOfInstallments = $creditPlan->installments_count ;
+            $numberOfInstallments = $creditPlan->installments_count;
             $totalCredit = $creditPlan->credit_percentage * $totalAmount / 100;
-        }
-        else {
-            // اگر محصول به هیچ CreditPlan مرتبط نبود
+        } else {
             $numberOfInstallments = 0;
             $totalCredit = 0;
         }
 
-
         $installmentAmount = ($numberOfInstallments != 0) ? $totalCredit / $numberOfInstallments : 0;
         $timeline = [];
 
-        // محاسبه زمان‌های هر قسط اعتباری
         for ($i = 1; $i <= $numberOfInstallments; $i++) {
             $timeline[$i] = (object) [
                 'month' => $i,
@@ -297,4 +305,87 @@ class Product extends Model
 
         return (object) ["timeline" => $timeline, "totalCredit" => $totalCredit];
     }
+
+    public function getDateShamsiAttribute()
+    {
+        $gregorianDate = \Carbon\Carbon::parse($this->due_date);
+        $jalaliDate = \Morilog\Jalali\Jalalian::fromCarbon($gregorianDate);
+        return $jalaliDate->format('Y/m/d');
+    }
+
+
+    public function attributeCombinations()
+    {
+        return $this->hasMany(ProductAttributeCombination::class);
+    }
+
+
+    public function getCombinations()
+    {
+        return $this->attributeCombinations()->with('attributeProperties.attribute', 'attributeProperties.property')->get();
+    }
+
+    // رابطه‌ی بسیار به بسیار با تخفیف‌ها
+    public function discountCodes()
+    {
+        return $this->belongsToMany(DiscountCode::class, 'discount_product', 'product_id', 'discount_code_id');
+    }
+
+    public function calculateTotalPriceWithAttributes()
+    {
+        $totalPrice = 0;
+        $attributes = $this->attributes()->get();
+
+        foreach ($attributes as $attribute) {
+            $firstItem = $attribute->properties()->first();
+            if ($firstItem) {
+                $combination = $firstItem->attributeCombinations->firstWhere('product_id', $this->id);
+                if ($combination) {
+                    $totalPrice += $combination->price;
+                }
+            }
+        }
+
+        return $totalPrice;
+    }
+
+    public function getCombinationDetails($attributes)
+    {
+        // شروع با تمام ترکیب‌های محصول
+        $combinations = $this->attributeCombinations();
+
+        // فیلتر کردن بر اساس هر ویژگی و خصوصیت انتخاب شده
+        foreach ($attributes as $attributeId => $propertyId) {
+            $combinations = $combinations->whereHas('attributeProperties', function($query) use ($attributeId, $propertyId) {
+                $query->where('attribute_id', $attributeId)
+                      ->where('property_id', $propertyId);
+            });
+        }
+        // برای نمایش کوئری SQL
+        //dd($combinations->toSql(), $combinations->getBindings());
+        // برگرداندن اولین ترکیب پیدا شده که مطابق با ویژگی‌ها باشد
+        return $combinations->first();
+    }
+
+
+    /**
+     * دریافت جزئیات ترکیب مستقل ویژگی.
+     *
+     * @param int $attributeId
+     * @param mixed $selectedValue
+     * @return ProductAttributeCombination|null
+     */
+    public function getIndependentCombinationDetails($attributeId, $selectedValue)
+    {
+
+        // یافتن ترکیب بر اساس ویژگی مستقل و property_id
+        return $this->attributeCombinations()
+            ->whereHas('attributeProperties', function ($query) use ($attributeId, $selectedValue) {
+                $query->where('attribute_id', $attributeId)
+                    ->where('property_id', $selectedValue);
+            })
+            ->first();
+    }
+
+
 }

@@ -27,15 +27,24 @@ use Illuminate\Notifications\Notifiable;
         'address',
         'postal_code',
         'phone',
+        'national_code',
+        'avatar',
         'check_payment_active',
         'credit_payment_active',
         'credit_limit',
+        'role_id',
     ];
 
     protected $casts = [
         'check_payment_active' => 'boolean',
         'credit_payment_active' => 'boolean',
     ];
+
+    // Define the relationship with the Product model
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 
 	public function payments()
 	{
@@ -96,6 +105,7 @@ use Illuminate\Notifications\Notifiable;
     {
         return $this->belongsTo(Role::class);
     }
+
     public function hasRole(string $role): bool
     {
         return $this->role()->where('title', $role)->exists();
@@ -103,8 +113,9 @@ use Illuminate\Notifications\Notifiable;
 
     public function isAdmin(): bool
     {
-        return $this->role->title === 'admin';
+        return $this->role->title !== 'user';
     }
+
 	public function tokens()
 	{
 		return $this->hasMany(UserToken::class);
@@ -242,7 +253,7 @@ use Illuminate\Notifications\Notifiable;
 
                     if ($product) {
 
-                        $attributes = $cartItem->orderAttributeItems;
+                        $attributes = $cartItem->orderProperties;
                         // Extract quantity from the item using regular expressions
                         $quantity =  $cartItem->quantity;
                         $cartCount += $quantity;
@@ -463,4 +474,126 @@ use Illuminate\Notifications\Notifiable;
             return 0;
         }
     }
+
+    public function creditPlans()
+    {
+        return $this->belongsToMany(CreditPlan::class, 'credit_plan_user');
+    }
+
+    public function loginSessions()
+    {
+        return $this->hasMany(LoginSession::class);
+    }
+
+    // رابطه‌ی بسیار به بسیار با تخفیف‌ها
+    public function discountCodes()
+    {
+        return $this->belongsToMany(DiscountCode::class, 'discount_user', 'user_id', 'discount_code_id');
+    }
+
+    // تعریف رابطه با مدل TransportRegion
+    public function transportRegions()
+    {
+        return $this->hasMany(TransportRegion::class);
+    }
+
+    public function activeServices()
+    {
+        return $this->hasMany(ServiceDetail::class);
+    }
+
+    public function worktimes()
+    {
+        return $this->hasMany(Worktime::class);
+    }
+
+    public function getCurrentMonthTotalHours()
+    {
+        $currentJalaliMonth = Jalalian::now();
+
+        // استخراج سال و ماه شمسی
+        $year = $currentJalaliMonth->getYear();
+        $month = $currentJalaliMonth->getMonth();
+
+        // تعیین تعداد روزهای ماه جاری
+        $daysInMonth = 30; // پیش فرض برای ماه‌های 30 روزه
+        if ($month <= 6) {
+            $daysInMonth = 31; // ماه‌های 31 روزه (فروردین تا شهریور)
+        } elseif ($month == 12) {
+            $daysInMonth = $currentJalaliMonth->isLeapYear() ? 30 : 29; // اسفند ماه (سال کبیسه یا غیر کبیسه)
+        }
+
+        if ($month < 10) {
+            $month = "0" . $month;
+        }
+
+        // تاریخ شروع ماه جاری (اولین روز ماه شمسی)
+        $startOfMonthJalali = Jalalian::fromFormat('Y-m-d', "$year-$month-01");
+        $startOfMonth = $startOfMonthJalali->toCarbon()->toDateString();
+
+        // تاریخ پایان ماه جاری (آخرین روز ماه شمسی)
+        $endOfMonthJalali = Jalalian::fromFormat('Y-m-d', "$year-$month-$daysInMonth");
+        $endOfMonth = $endOfMonthJalali->toCarbon()->toDateString();
+
+        return $this->worktimes()
+                    ->whereBetween('date', [$startOfMonth, $endOfMonth])
+                    ->sum('hours');
+    }
+
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'group_user');
+    }
+
+    public function creditScore()
+    {
+        return $this->hasOne(CreditScore::class);
+    }
+
+    // فرض بر این است که مدل User مربوط به جدول users است و شامل روابط لازم برای نقش‌ها و پرمیشن‌ها می‌باشد.
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * بررسی دسترسی برای یک کد دسترسی خاص
+     *
+     * @param string $permissionName
+     * @param string $type
+     * @return bool
+     */
+    public function hasPermission($permissionName, $type = 'read_own')
+    {
+
+        if ($this->role->hasPermission($permissionName, $type)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * بررسی دسترسی خواندن
+     *
+     * @param string $permissionName
+     * @return bool
+     */
+    public function hasReadPermission($permissionName)
+    {
+        return $this->hasPermission($permissionName, 'read_own');
+    }
+
+    /**
+     * بررسی دسترسی نوشتن
+     *
+     * @param string $permissionName
+     * @return bool
+     */
+    public function hasWritePermission($permissionName)
+    {
+        return $this->hasPermission($permissionName, 'write_own');
+    }
+
+
 }
