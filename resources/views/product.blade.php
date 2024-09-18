@@ -129,7 +129,7 @@
                                         @endif
                                     </span>
                                 </p>
-                                <p class="product-vendor">دسته بندی:<span class="text"><a href="{{ $product->firstCategory()->link }}">{{$product->firstCategory()->title ?? null}}</a></span>
+                                <p class="product-vendor">دسته بندی:<span class="text"><a href="{{ ($product->firstCategory()!=null) ? $product->firstCategory()->link : '' }}">{{$product->firstCategory()->title ?? null}}</a></span>
                                 </p>
 
                                 <p class="product-sku">شناسه:<span class="text">{{$product->holo_code ?? $product->id}}</span></p>
@@ -164,7 +164,7 @@
                             <input type="hidden" name="param[product]" value="{{ $product->id }}">
                             <!-- Swatches -->
                             <div class="product-swatches-option">
-                                @foreach ($product->attributes()->get() as $attributes)
+                                @foreach ($product->attributes as $attributes)
 
                                     @if($attributes->display_type =='color' )
                                         @php
@@ -174,11 +174,11 @@
                                         <div class="product-item swatches-image w-100 mb-3 swatch-0 option1" data-option-index="{{ $loop->index }}">
                                             <label class="label d-flex align-items-center">{{ $attribute->name }}<span class="slVariant me-1 fw-bold"></span></label>
                                             <ul class="variants-clr swatches d-flex-center pt-1 clearfix" name="param[{{ $attribute->id }}]">
-                                                @foreach($attribute->items()->get() as $item)
-                                                    <li class="swatch large radius available {{ $item->name }}  {{ $loop->index==0 ? 'active':'' }}" onclick="updateHiddenInput({{ $attribute->id }},'{{ $item->name }}')"></li >
+                                                @foreach($attribute->properties as $item)
+                                                    <li class="swatch large radius available {{ $item->value }}  {{ $loop->index==0 ? 'active':'' }}" onclick="updateHiddenInput({{ $attribute->id }},'{{ $item->value }}')"></li >
                                                 @endforeach
                                             </ul>
-                                            <input type="hidden" name="param[{{ $attribute->id }}]"   value="{{ $attribute->items()->get()->first()->name }}">
+                                            <input type="hidden" name="param[{{ $attribute->id }}]"   value="{{ $item->value }}">
                                         </div>
                                     @endif
 
@@ -193,10 +193,10 @@
                                             <label class="label d-flex align-items-center">{{$attribute->name}}:</label>
                                             <ul class="variants-size size-swatches d-flex-center pt-1 clearfix" name="param[{{ $attribute->id }}]">
                                                 @foreach($items as $item)
-                                                    <li class="swatch large radius available {{ $loop->index==0 ? 'active':'' }}" onclick="updateHiddenInput({{ $attribute->id }},'{{ $item->name }}')"><span class="swatchLbl" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $item->details }}">{{ $item->details }}</span></li>
+                                                    <li class="swatch large radius available {{ $loop->index==0 ? 'active':'' }}" onclick="updateHiddenInput({{ $attribute->id }},'{{ $item->value }}')"><span class="swatchLbl" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $item->details }}">{{ $item->details }}</span></li>
                                                 @endforeach
                                             </ul>
-                                            <input type="hidden" name="param[{{ $attribute->id }}]" value="{{ $attribute->items()->get()->first()->name }}">
+                                            <input type="hidden" name="param[{{ $attribute->id }}]" value="{{ $item->value }}">
                                         </div>
 
                                     @endif

@@ -86,7 +86,7 @@
             <!--Logo-->
             <div class="logo col-4 col-sm-4 col-md-4 col-lg-2 align-self-center">
                 <a class="logoImg" href="/home">
-                    <img class="mx-lg-auto default-logo" src="{{ asset('storage/images/logo-white.png')}}" alt="قالب  چند منظوره هما" title="قالب  چند منظوره هما" width="149" height="39" />
+                    <img class="mx-lg-auto default-logo" src="{{ $setting->settings['logo'] }}" alt="{{ $setting->settings['site_title'] }}" title="{{ $setting->settings['site_title'] }}" width="149" height="39" />
                     <span class="logo-txt d-none">هما</span>
                 </a>
             </div>

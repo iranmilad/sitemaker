@@ -5,7 +5,7 @@
             <div class="row">
                 <!--Logo-->
                 <div class="logo col-4 col-sm-4 col-md-4 col-lg-3 col-xxl-3 align-self-center">
-                    <a class="logoImg" href="/home"><img src="{{ asset('storage/images/logo-jewelry.png')}}" alt="Hema Multipurpose Html Template" title="Hema Multipurpose Html Template" width="149" height="39" /></a>
+                    <a class="logoImg" href="/home"><img src="{{ $setting->settings['logo'] }}" alt="Hema Multipurpose Html Template" title="Hema Multipurpose Html Template" width="149" height="39" /></a>
                 </div>
                 <!--End Logo-->
                 <!--Search Inline-->

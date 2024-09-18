@@ -127,7 +127,7 @@
                 <!--End Left Icon-->
                 <!--Logo-->
                 <div class="logo col-4 col-sm-4 col-md-2 col-lg-2 col-xxl-2 align-self-center text-center">
-                    <a class="logoImg" href="/home"><img class="mx-auto" src="{{ asset('storage/images/logo_black.png')}}" alt="Hema Multipurpose Html Template" title="Hema Multipurpose Html Template" width="149" height="39" /></a>
+                    <a class="logoImg" href="/home"><img class="mx-auto" src="{{ $setting->settings['logo'] }}" alt="Hema Multipurpose Html Template" title="Hema Multipurpose Html Template" width="149" height="39" /></a>
                 </div>
                 <!--End Logo-->
                 <!--Right Icon-->

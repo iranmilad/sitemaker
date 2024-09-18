@@ -156,7 +156,7 @@
                 @foreach ($menus->childMenus  as $menu)
                     <div class="brands-logo">
                         <a href="{{  $menu->link  }}" class="zoom-scal zoom-scal-nopb">
-                            <img class="blur-up lazyload" src="{{  $menu->icon  }}" alt="Brand Logo" title="{{ $menu->title }}"  width="194" height="97" />
+                            <img class="blur-up lazyload" src="{{  $menu->icon  }}" alt="{{ $menu->title }}" title="{{ $menu->title }}"  width="80" height="80" />
                         </a>
                     </div>
                 @endforeach

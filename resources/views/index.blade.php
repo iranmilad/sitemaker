@@ -14,13 +14,9 @@
         <!--Brand Logo-->
         <section class="section logo-section pb-0">
             <div class="container container-1330">
-                <div class="section-header d-none">
-                    <h2>برندهای محبوب</h2>
-                    <p> راه را به سوی یک روز روشن‌تر معرفی کنید</p>
-                </div>
 
                 {{-- future menu --}}
-                <livewire:LoadWidget blockId="block_8" />
+                <livewire:LoadWidget blockId="future_product_menu" />
 
             </div>
         </section>

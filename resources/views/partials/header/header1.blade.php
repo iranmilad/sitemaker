@@ -3,8 +3,8 @@
         <div class="row">
             <!--Logo-->
             <div class="logo col-5 col-sm-3 col-md-3 col-lg-2 align-self-center">
-                <a class="logoImg" href="/"><img src="{{ asset('storage/images/logo.png') }}"
-                        alt="قالب  چند منظوره هما" title="قالب  چند منظوره هما" width="149" height="39" /></a>
+                <a class="logoImg" href="/"><img src="{{ $setting->settings['logo'] }}"
+                        alt="{{ $setting->settings['site_title'] }}" title="{{ $setting->settings['site_title'] }}" width="149" height="39" /></a>
             </div>
             <!--پایان لوگو-->
             <!--منو-->

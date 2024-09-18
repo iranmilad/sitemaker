@@ -280,7 +280,7 @@
                                     <div class="swiper swiper-product-options">
                                         <div class="swiper-wrapper">
                                             <!-- Loop through attribute items and generate HTML for each color option -->
-                                            @foreach($attribute->items()->get() as $item)
+                                            @foreach($attribute->properties as $item)
                                             <div class="swiper-slide">
                                                 <label class="product-template" for="{{ $item->id }}">
                                                     @if ($item->img)
@@ -308,7 +308,7 @@
             @if($attributes->display_type == 'material')
                 @php
                     $attribute=$attributes;
-                    $items = $attribute->items;
+                    $items = $attribute->properties;
                 @endphp
 
                 <!-- START: item -->
@@ -366,7 +366,7 @@
             @if($attributes->display_type == 'size')
                 @php
                     $attribute=$attributes;
-                    $items = $attribute->items;
+                    $items = $attribute->properties;
                 @endphp
                 <!-- START: OTHER OPTIONS Size-->
                 <div class="accordion-item">
@@ -421,7 +421,7 @@
             @if($attributes->display_type == 'model')
                 @php
                     $attribute=$attributes;
-                    $items = $attribute->items;
+                    $items = $attribute->properties;
                 @endphp
                 <!-- START: MATERIAL -->
                 <div class="accordion-item">
@@ -475,7 +475,7 @@
             @if($attributes->display_type == 'priceModel')
                 @php
                     $attribute=$attributes;
-                    $items = $attribute->items;
+                    $items = $attribute->properties;
                 @endphp
                 <!-- START: OTHER OPTIONS -->
                 <div class="accordion-item">
@@ -557,7 +557,7 @@
             @if($attributes->display_type == 'options')
                 @php
                     $attribute=$attributes;
-                    $items = $attribute->items;
+                    $items = $attribute->properties;
                 @endphp
                     <!-- START: Options -->
                     <div class="accordion-item">
@@ -609,7 +609,7 @@
             @if($attributes->display_type == 'value')
                 @php
                     $attribute=$attributes;
-                    $items = $attribute->items;
+                    $items = $attribute->properties;
                 @endphp
                 <!-- START: OTHER OPTIONS Count -->
                 <div class="accordion-item">
