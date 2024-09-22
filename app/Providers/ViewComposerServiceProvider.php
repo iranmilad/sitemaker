@@ -34,17 +34,20 @@ class ViewComposerServiceProvider extends ServiceProvider
 
         });
 
-        View::composer('partials.header.*', function ($view) {
+        View::composer(['*'], function ($view) {
             $cartCount = 0;
 
             $orderController = new OrderController();
             $cartCount = $orderController->getCartItemCount(request());
+
             $setting = Setting::where('group', "general")->first();
+            $grid = Setting::where('group', "grid")->first();
+            $theme = Setting::where('group', "theme")->first();
             $view->with('cartCount', $cartCount);
-
             $view->with('setting', $setting);
+            $view->with('grid', $grid);
+            $view->with('theme', $theme);
         });
-
 
 
     }

@@ -33,7 +33,8 @@
         </section>
         <div class="swiper discountedSwiper tw-mt-6">
             <div class="swiper-wrapper tw-flex tw-items-stretch">
-                @foreach ($products as $product)
+                @forelse ($products as $product)
+
                     <div class="swiper-slide index-product">
                         @isset($product->hover_img)
                         <x-product name="{{ $product->title }}"
@@ -55,7 +56,10 @@
                         @endisset
 
                     </div>
-                @endforeach
+
+                @empty
+                    <p> هیچ محصولی یافت نشد</p>
+                @endforelse
             </div>
         </div>
     @elseif(isset($options['type']) && $options['type'] ==='special')

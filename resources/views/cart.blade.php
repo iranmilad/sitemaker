@@ -50,7 +50,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($orders->items as $order)
+                                @forelse ($orders->basket()->items as $order)
                                     <x-cart :order="$order" />
                                 @empty
                                     <tr>
@@ -77,23 +77,35 @@
                     <!--پایان سبد خرید-->
 
                     <!--یادداشت با برآورد حمل و نقل-->
-                    <div class="row my-4 pt-3  d-none">
+                    <div class="row my-4 pt-3">
 
                         <div class="col-12 col-sm-12 col-md-12 col-lg-6 mb-12 cart-col">
-                            <div class="cart-discount d-none">
+                            <div class="cart-discount">
                                 <h5>کدهای تخفیف</h5>
-                                <form action="#" method="post">
-                                    <div class="form-group">
-                                        <label for="address_zip">اگر کد کوپن خود را دارید وارد کنید.</label>
-                                        <div class="input-group0">
-                                            <input class="form-control" type="text" name="coupon" required />
-                                            <input type="submit" class="btn text-nowrap mt-3" value="اعمال کوپن" />
-                                        </div>
+                                @if($orders->basket()->cart->discount_amount > 0)
+                                    <div class="alert alert-success mt-3  m-3">
+                                        کد تخفیف اعمال شده است.
                                     </div>
-                                </form>
+                                    <form  action="{{ route('removeDiscount', $orders->id) }}" method="POST">
+                                        @csrf
+                                        <button class="btn btn-danger" type="submit">حذف کد تخفیف</button>
+                                    </form>
+                                @else
+                                    <form action="{{ route('applyDiscount', $orders->id) }}" method="post">
+                                        @csrf
+                                        <div class="form-group">
+                                            <label for="address_zip">اگر کد کوپن خود را دارید وارد کنید.</label>
+                                            <div class="input-group0">
+                                                <input class="form-control" type="text" name="discount_code" required />
+                                                <input type="hidden" name="value" value="{{ $orders->basket()->cart->total }}">
+                                                <input type="submit" class="btn text-nowrap mt-3" value="اعمال کوپن" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                @endif
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-12 cart-col">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-12 cart-col d-none">
                             <div id="shipping-calculator" class="mt-4 mt-lg-0">
                                 <h5>آدرس تحویل کالا</h5>
                                 <form class="estimate-form row row-cols-lg-3 row-cols-md-3 row-cols-1" action="#"
@@ -139,13 +151,13 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-12 cart-col">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-12 cart-col d-none">
                             <div class="mb-3">
                                 <label for="address" class="form-label fs-7">آدرس</label>
                                 <textarea name="address" type="address" class="form-control fs-7" id="address" placeholder="آدرس کامل" value="{{ old('address', $user->address) }}" class="form-control cart-note-input" rows="3" required></textarea>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-12 cart-col">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-12 cart-col d-none">
                             <div class="cart-note mb-4">
                                 <h5>یک یادداشت به سفارش خود اضافه کنید</h5>
                                 <label for="cart-note">یادداشت هایی درباره سفارش شما، به عنوان مثال. یادداشت های ویژه برای
@@ -166,28 +178,28 @@
                             <div class="row g-0 border-bottom pb-2">
                                 <span class="col-6 col-sm-6 cart-subtotal-title"><strong>کالا </strong></span>
                                 <span class="col-6 col-sm-6 cart-subtotal-title cart-subtotal text-end"><span
-                                        class="money">{{ $orders->cart->total  }} تومان</span></span>
+                                        class="money">{{ $orders->basket()->cart->total }} تومان</span></span>
                             </div>
                             <div class="row g-0 border-bottom py-2">
                                 <span class="col-6 col-sm-6 cart-subtotal-title"><strong>تخفیف کوپن</strong></span>
                                 <span class="col-6 col-sm-6 cart-subtotal-title cart-subtotal text-end"><span
-                                        class="money">{{ $orders->cart->discount  }} تومان</span></span>
+                                        class="money">{{ $orders->basket()->cart->discount_amount   }} تومان</span></span>
                             </div>
                             <div class="row g-0 border-bottom py-2">
                                 <span class="col-6 col-sm-6 cart-subtotal-title"><strong>مالیات</strong></span>
                                 <span class="col-6 col-sm-6 cart-subtotal-title cart-subtotal text-end">
-                                <span  class="money">{{ $orders->cart->tax  }} تومان</span></span>
+                                <span  class="money">{{ $orders->basket()->cart->tax  }} تومان</span></span>
                             </div>
                             <div class="row g-0 border-bottom py-2">
                                 <span class="col-6 col-sm-6 cart-subtotal-title"><strong>ارسال</strong></span>
                                 <span class="col-6 col-sm-6 cart-subtotal-title cart-subtotal text-end"><span
-                                        class="money"> {{ $orders->cart->deliveryCost  }} تومان</span></span>
+                                        class="money"> {{ $orders->basket()->cart->deliveryCost  }} تومان</span></span>
                             </div>
                             <div class="row g-0 pt-2">
                                 <span class="col-6 col-sm-6 cart-subtotal-title fs-6"><strong>مجموع</strong></span>
                                 <span
                                     class="col-6 col-sm-6 cart-subtotal-title fs-5 cart-subtotal text-end text-primary"><b
-                                        class="money">{{ $orders->cart->totalPayed }} تومان</b></span>
+                                        class="money">{{ $orders->basket()->cart->totalPayed }} تومان</b></span>
                             </div>
 
                             <a href="/shipping" id="cartCheckout" class="btn btn-lg my-4 checkout w-100">ادامه

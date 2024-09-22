@@ -106,6 +106,8 @@
                                                             <span class="badge rounded-pill bg-dark custom-badge">در حال پردازش</span>
                                                         @elseif ($order->cart->orderStatus=="rejected")
                                                             <span class="badge rounded-pill bg-secondary custom-badge">لغو شد</span>
+                                                        @elseif ($order->cart->orderStatus=="basket")
+                                                            <span class="badge rounded-pill bg-secondary custom-badge">در انتظار پرداخت</span>
                                                         @endif
 
                                                     </td>

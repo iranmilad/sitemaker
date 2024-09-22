@@ -69,17 +69,27 @@
                                 <p class="product-sku"><span class="text">{{ $product->holo_code }}</span></p>
                             </div>
                             <div class="pro-stockLbl my-2">
-                                <span class="d-flex-center stockLbl instock d-none"><i class="icon anm anm-check-cil"></i><span> موجود است</span></span>
                                 <span class="d-flex-center stockLbl preorder d-none"><i class="icon anm anm-clock-r"></i><span> اکنون پیش‌سفارش دهید</span></span>
-                                <span class="d-flex-center stockLbl outstock d-none"><i class="icon anm anm-times-cil"></i> <span>فرخته شده</span></span>
-                                <span class="d-flex-center stockLbl lowstock" data-qty="{{ $product->few }}"><i class="icon anm anm-exclamation-cir"></i><span> اکنون سفارش دهید، فقط <span class= "items">10</span> باقی مانده است!</span></span>
+                                @if ($product->few==0)
+                                <span class="d-flex-center stockLbl outstock"><i class="icon anm anm-times-cil"></i> <span>ناموجود</span></span>
+                                @elseif ($product->few<2)
+                                <span class="d-flex-center stockLbl lowstock" data-qty="{{ $product->few }}"><i class="icon anm anm-exclamation-cir"></i><span> اکنون سفارش دهید، فقط <span class= "items">{{ $product->few }}</span> باقی مانده است!</span></span>
+                                @else
+                                <span class="d-flex-center stockLbl instock d-none"><i class="icon anm anm-check-cil"></i><span> موجود است</span></span>
+                                @endif
                             </div>
                             <div class="product-price d-flex-center my-3">
-                                <span class="price old-price"> تومان {{ $product->price }}</span>
-                                <span class="price"> تومان {{ $product->sale_price }}</span>
+                                @if ($product->sale_price)
+                                    <span class="price old-price"> {{ $product->price ?? '' }} تومان</span>
+                                    <br>
+                                    <span class="price"> {{ $product->sale_price ?? '' }} تومان</span>
+                                @else
+                                    <span class="price"> {{ $product->price ?? '0' }} تومان</span>
+                                @endif
+
                             </div>
                             <div class="sort-description">{{ $product->description }}</div>
-                            <form id="product-options" class="product-form">
+                            <form method="post" action="{{ route('addToCart') }}" class="product-form product-form-border hidedropdown">
                                 @csrf
 
                                 <input type="hidden" data-real="true" name="param[product]" value="{{ $product->id }}">
@@ -133,12 +143,22 @@
                                         <div class="quantity">
                                             <div class="qtyField rounded">
                                                 <a class="qtyBtn minus" href="#;"><i class="icon anm anm-minus-r" aria-hidden="true"></i></a>
-                                                <input type="text" name="quantity" value="1" class="product-form__input qty">
+                                                <input type="text" name="param[quantity]" value="1" class="product-form__input qty">
                                                 <a class="qtyBtn plus" href="#;"><i class="icon anm anm-plus-l" aria-hidden="true"></i></a>
                                             </div>
                                         </div>
                                         <div class="addtocart ms-3 fl-1">
-                                            <button class="btn product-cart-submit w-100 add-to-cart-main-btn"><span>افزودن به سبد خرید</span></button>
+
+                                            @if (isset($product->quantity) and $product->quantity > 0)
+                                                <button type="submit" name="add"  class="btn product-cart-submit w-100 add-to-cart-main-btn">
+                                                    <span>به سبد خرید اضافه کنید</span>
+                                                </button>
+                                            @else
+                                                <button type="button" name="add"  class="btn btn-secondary product-form-sold-out" disabled="disabled">
+                                                    <span>تمام شده</span>
+                                                </button>
+                                            @endif
+
                                         </div>
                                     </div>
                                 </div>

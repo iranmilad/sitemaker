@@ -108,11 +108,19 @@
                             <!-- Product Reviews -->
                             <div class="product-review d-flex-center mb-3">
                                 <div class="reviewStar d-flex-center">
-                                    <i class="icon anm anm-star"></i>
-                                    <i class="icon anm anm-star"></i>
-                                    <i class="icon anm anm-star"></i>
-                                    <i class="icon anm anm-star"></i>
-                                    <i class="icon anm anm-star-o"></i>
+                                    @if($product->overallRatingAverage()<=0)
+                                    <i class="icon anm anm-star-o"></i><i class="icon anm anm-star-o"></i><i class="icon anm anm-star-o"></i><i class="icon anm anm-star-o"></i><i class="icon anm anm-star-o"></i>
+                                    @elseif($product->overallRatingAverage()<=1)
+                                    <i class="icon anm anm-star"></i><i class="icon anm anm-star-o"></i><i class="icon anm anm-star-o"></i><i class="icon anm anm-star-o"></i><i class="icon anm anm-star-o"></i>
+                                    @elseif($product->overallRatingAverage()<=2)
+                                    <i class="icon anm anm-star"></i><i class="icon anm anm-star"></i><i class="icon anm anm-star-o"></i><i class="icon anm anm-star-o"></i><i class="icon anm anm-star-o"></i>
+                                    @elseif($product->overallRatingAverage()<=3)
+                                    <i class="icon anm anm-star"></i><i class="icon anm anm-star"></i><i class="icon anm anm-star"></i><i class="icon anm anm-star-o"></i><i class="icon anm anm-star-o"></i>
+                                    @elseif($product->overallRatingAverage()<=4)
+                                    <i class="icon anm anm-star"></i><i class="icon anm anm-star"></i><i class="icon anm anm-star"></i><i class="icon anm anm-star"></i><i class="icon anm anm-star-o"></i>
+                                    @elseif($product->overallRatingAverage()<=5)
+                                    <i class="icon anm anm-star"></i><i class="icon anm anm-star"></i><i class="icon anm anm-star"></i><i class="icon anm anm-star"></i><i class="icon anm anm-star"></i>
+                                    @endif
                                     <span class="caption me-2">{{count($product->reviews)}}  دیدگاه</span>
                                 </div>
                                 <a class="reviewLink d-flex-center" href="#reviews">یک نظر بنویسید</a>
@@ -178,7 +186,7 @@
                                                     <li class="swatch large radius available {{ $item->value }}  {{ $loop->index==0 ? 'active':'' }}" onclick="updateHiddenInput({{ $attribute->id }},'{{ $item->value }}')"></li >
                                                 @endforeach
                                             </ul>
-                                            <input type="hidden" name="param[{{ $attribute->id }}]"   value="{{ $item->value }}">
+                                            <input type="hidden" name="param[{{ $attribute->id }}]"   value="{{ $attribute->properties->first()->value ?? null }}">
                                         </div>
                                     @endif
 
@@ -702,7 +710,7 @@
     </script>
 
     <!-- Photoswipe Gallery JS -->
-    <script src="{{ Vite::asset('resources/js/vendor/photoswipe.min.js') }}"></script>
+    <script src="{{ asset('js/vendor/photoswipe.min.js') }}"></script>
 
     <script>
         $(function() {
@@ -747,13 +755,69 @@
     </script>
 
     <script>
-
         function updateHiddenInput(attributeId, attributeValue) {
-
             // تنظیم مقدار ویژگی انتخاب شده به عنوان مقدار ورودی مخفی
             document.querySelector('input[name="param[' + attributeId + ']"]').value = attributeValue;
         }
+    </script>
 
+    <script>
+        $(document).on('click', '.qtyBtn.minus', function (e) {
+            e.preventDefault();
+            let $input = $(this).siblings('.cart-qty-input');
+            let currentVal = parseInt($input.val());
+            let productId = $(this).data('id');
+
+            if (!isNaN(currentVal) && currentVal > 1) {
+                $input.val(currentVal - 1);
+                updateCartItemQuantity(productId, currentVal - 1);
+            }
+        });
+
+        $(document).on('click', '.qtyBtn.plus', function (e) {
+            e.preventDefault();
+            let $input = $(this).siblings('.cart-qty-input');
+            let currentVal = parseInt($input.val());
+            let productId = $(this).data('id');
+
+            if (!isNaN(currentVal)) {
+                $input.val(currentVal + 1);
+                updateCartItemQuantity(productId, currentVal + 1);
+            }
+        });
+
+        function updateCartItemQuantity(productId, quantity) {
+            $.ajax({
+                url: '/update-cart',
+                method: 'POST',
+                data: {
+                    id: productId,
+                    count: quantity,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    if (response.cart) {
+                        // بروزرسانی تعداد کل و قیمت کل
+                        $('.cart-count').text(response.cart.count);
+                        $('.cart-total').text(response.cart.total + ' تومان');
+
+                        // بروزرسانی آیتم‌های سبد خرید در UI
+                        updateCartItemsUI(response.items);
+                    }
+                },
+                error: function (error) {
+                    console.error('Error updating cart:', error);
+                }
+            });
+        }
+
+        function updateCartItemsUI(items) {
+            items.forEach(function (item) {
+                let $itemElement = $('[data-order-id="' + item.id + '"]');
+                $itemElement.find('.cart-qty-input').val(item.quantity);
+                $itemElement.find('.price').text(item.price + ' تومان');
+            });
+        }
 
     </script>
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +16,14 @@ class Post extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(PostCategory::class, 'post_category_post', 'post_id', 'post_category_id');
+        $categories = $this->belongsToMany(PostCategory::class, 'post_category_post', 'post_id', 'post_category_id')->get();
+
+        // اگر دسته‌بندی‌ای یافت نشد، یک دسته‌بندی پیش‌فرض بازگردانده شود
+        if ($categories->isEmpty()) {
+            return collect([PostCategory::first()]); // بازگرداندن اولین دسته‌بندی به عنوان پیش‌فرض
+        }
+
+        return $categories;
     }
 
     public function tags()

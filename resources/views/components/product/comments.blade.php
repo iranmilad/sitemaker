@@ -36,6 +36,7 @@
                     $rate_4 = $product->countRatings(4);
                     $rate_5 = $product->countRatings(5);
                     $total_rate = $rate_0 + $rate_1 + $rate_2 + $rate_3 + $rate_4 + $rate_5;
+                    $total_rate = ($total_rate == 0) ? 1 : $total_rate;
                 @endphp
 
                 <div class="ratings-container d-flex align-items-center mt-1">
@@ -48,7 +49,7 @@
                         </a>
                     </div>
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ round($rate_0 / $total_rate * 100 ) }}"  aria-valuemin="0" aria-valuemax="100" style="width:{{ round($rate_0 / $total_rate * 100 ) }};"></div>
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ round($rate_0 / $total_rate * 100 )  }}"  aria-valuemin="0" aria-valuemax="100" style="width:{{ round($rate_0 / $total_rate * 100 )  }};"></div>
                     </div>
                     <div class="progress-value">{{ round($rate_0 / $total_rate * 100 ) }}%</div>
                 </div>

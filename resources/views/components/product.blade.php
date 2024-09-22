@@ -77,9 +77,13 @@
         <!-- End Product Name -->
         <!-- Product Price -->
         <div class="product-price">
+
+            @if ($product->sale_price)
             <span class="price old-price"> {{ $product->price ?? '' }} تومان</span>
-            @if ($product->discountedPrice)
-            <span class="price"> {{ $product->discountedPrice ?? '' }} تومان</span>
+            <br>
+            <span class="price"> {{ $product->sale_price ?? '' }} تومان</span>
+            @else
+            <span class="price"> {{ $product->price ?? '0' }} تومان</span>
             @endif
         </div>
         <!-- End Product Price -->

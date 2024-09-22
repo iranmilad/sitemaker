@@ -120,28 +120,28 @@
                                     <div class="row g-0 border-bottom pb-2">
                                         <span class="col-6 col-sm-6 cart-subtotal-title"><strong>کالا </strong></span>
                                         <span class="col-6 col-sm-6 cart-subtotal-title cart-subtotal text-end"><span
-                                                class="money">{{ $orders->cart->total  }} تومان</span></span>
+                                                class="money">{{ $orders->basket()->cart->total  }} تومان</span></span>
                                     </div>
                                     <div class="row g-0 border-bottom py-2">
                                         <span class="col-6 col-sm-6 cart-subtotal-title"><strong>تخفیف کوپن</strong></span>
                                         <span class="col-6 col-sm-6 cart-subtotal-title cart-subtotal text-end"><span
-                                                class="money">{{ $orders->cart->discount  }} تومان</span></span>
+                                                class="money">{{ $orders->basket()->cart->discount_amount  }} تومان</span></span>
                                     </div>
                                     <div class="row g-0 border-bottom py-2">
                                         <span class="col-6 col-sm-6 cart-subtotal-title"><strong>مالیات</strong></span>
                                         <span class="col-6 col-sm-6 cart-subtotal-title cart-subtotal text-end">
-                                        <span  class="money">{{ $orders->cart->tax  }} تومان</span></span>
+                                        <span  class="money">{{ $orders->basket()->cart->tax  }} تومان</span></span>
                                     </div>
                                     <div class="row g-0 border-bottom py-2">
                                         <span class="col-6 col-sm-6 cart-subtotal-title"><strong>ارسال</strong></span>
                                         <span class="col-6 col-sm-6 cart-subtotal-title cart-subtotal text-end"><span
-                                                class="money"> {{ $orders->cart->deliveryCost  }} تومان</span></span>
+                                                class="money"> {{ $orders->basket()->cart->deliveryCost  }} تومان</span></span>
                                     </div>
                                     <div class="row g-0 pt-2">
                                         <span class="col-6 col-sm-6 cart-subtotal-title fs-6"><strong>مجموع</strong></span>
                                         <span
                                             class="col-6 col-sm-6 cart-subtotal-title fs-5 cart-subtotal text-end text-primary"><b
-                                                class="money">{{ $orders->cart->totalPayed }} تومان</b></span>
+                                                class="money">{{ $orders->basket()->cart->totalPayed }} تومان</b></span>
                                     </div>
 
                                     <p class="cart-shipping mt-3">ارسال و مالیات محاسبه شده در هنگام تسویه حساب</p>

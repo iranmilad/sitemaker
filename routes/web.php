@@ -19,6 +19,7 @@ use App\Http\Controllers\VerifyController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\Admin\FileController;
 use App\Http\Controllers\Admin\UserController;
@@ -171,6 +172,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/cart/{id}', [OrderController::class,'cartItemDetail'])->name('cartItemDetail');
 
     Route::post("/remove-cart", [OrderController::class,'removeItemCart'])->name('removeItemCart');
+    Route::get('/cart/remove/{id}', [OrderController::class, 'removeItem'])->name('cart.remove');
 
     Route::post("/remove-all-cart",[OrderController::class,'removeAllCart'])->name('removeAllCart');
 
@@ -196,6 +198,8 @@ Route::group(['middleware' => ['auth']],function(){
     Route::post('/delivery', [OrderController::class,'storeDelivery'])->name('delivery.store');
     Route::get('/payment/{paymentMethod?}', [OrderController::class,'payment'])->name('payment');
     Route::post('/orderComplete', [OrderController::class,'complete'])->name('order.complete');
+    Route::post('/{order}/apply-discount', [DiscountController::class, 'applyDiscount'])->name('applyDiscount');
+    Route::post('/{order}/remove-discount', [DiscountController::class, 'removeDiscount'])->name('removeDiscount');
 } );
 
 

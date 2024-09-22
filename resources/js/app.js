@@ -192,29 +192,66 @@ $("#sendtoanotheraddress").on("change", function () {
     }
 });
 
+// روی رویداد کلیک دکمه حذف گوش دهید
+$('.remove').on('click', function (event) {
+    event.preventDefault();
 
-$(document).ready(function () {
-    $('.header-cart').on('click', function (event) {
-        event.preventDefault();
+    let orderId = $(this).data('order-id'); // دریافت شناسه آیتم
 
-        $.ajax({
-            url: '/mini-cart',
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (data) {
-                document.querySelector('[name="minicart"]').innerHTML = data.html;
-                document.querySelector('.cart-count').textContent = data.total;
+    // ارسال درخواست حذف با استفاده از AJAX
+    $.ajax({
+        url: '/cart/remove', // آدرس روت حذف آیتم
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // توکن CSRF
+        },
+        data: JSON.stringify({ id: orderId }), // ارسال شناسه آیتم
+        success: function (data) {
+            if (data.status === 'success') {
+                // حذف آیتم از DOM
+                $('li[data-order-id="' + orderId + '"]').remove();
 
+                // به‌روزرسانی تعداد آیتم‌های سبد خرید
+                $('.cart-count').text(data.cart.count);
+                $('.cart-total').text(data.cart.total + ' تومان');
 
-            },
-            error: function (error) {
-                console.error('Error fetching mini cart:', error);
+                // نمایش پیام موفقیت
+                alert(data.message);
             }
-        });
+        },
+        error: function (error) {
+            console.error('Error removing item:', error);
+        }
     });
 });
+
+// دریافت و به‌روزرسانی سبد خرید کوچک
+$('.header-cart').on('click', function (event) {
+    event.preventDefault();
+
+    $.ajax({
+        url: '/mini-cart',
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (data) {
+            $('[name="minicart"]').html(data.html); // به‌روزرسانی HTML سبد خرید کوچک
+            $('.cart-count').text(data.total); // به‌روزرسانی تعداد آیتم‌ها
+
+        },
+        error: function (error) {
+            console.error('Error fetching mini cart:', error);
+        }
+    });
+});
+
+
+
+
+
+
 
 

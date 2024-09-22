@@ -191,7 +191,7 @@ class Order extends Model
                     $timeTotal = $timePerUnit * $quantity;
                     $totalTime += $timeTotal;
 
-                    $totalPrice += $cartItem->total * $quantity;
+                    $totalPrice += $cartItem->total ;
 
                     // محاسبه تخفیف بر اساس نوع کد تخفیف
                     if ($discountCode) {
@@ -298,6 +298,7 @@ class Order extends Model
                     'createdAtDate' => $this->gregorianToJalalian($order->created_at_date),
                     "totalPayed" => number_format($totalPayed), // نمایش مبلغ نهایی قابل پرداخت
                     'totalTime' => number_format($totalTime), // نمایش زمان کل
+                    'tax' => 0 ,
                     'time_delivery' => round($totalTime/24)+2,
                 ],
                 "items" => $items,
@@ -320,6 +321,7 @@ class Order extends Model
                     'createdAtDate' => '',
                     "totalPayed" => 0,
                     'totalTime' => 0, // زمان کل
+                    'tax' => 0 ,
                     'time_delivery' => 2,
                 ],
                 "items" => [],
@@ -387,60 +389,61 @@ class Order extends Model
 
     private function deliveryCost($order)
     {
-        if ($order->deliveryType == 'home_delivery') {
-            if ($order->shipping_city && $order->shipping_province) {
-                // دریافت تمامی مناطق حمل‌ونقل
-                $transportRegions = TransportRegion::all();
 
-                // متغیر جمع هزینه نهایی
-                $totalCost = 0;
+        if ($order->shipping_city && $order->shipping_province) {
+            // دریافت تمامی مناطق حمل‌ونقل
+            $transportRegions = TransportRegion::all();
 
-                // محاسبه هزینه برای هر آیتم موجود در سفارش
-                foreach ($order->orderItems as $orderItem) {
-                    $product = $orderItem->product;
-                    $cartValue = $orderItem->total;
-                    $weight = $product->weight;
-                    $dimensions = [
-                        'length' => $product->length,
-                        'width' => $product->width,
-                        'height' => $product->height,
-                    ];
+            // متغیر جمع هزینه نهایی
+            $totalCost = 0;
 
-                    // بررسی تطابق شهر و استان با مناطق موجود
-                    foreach ($transportRegions as $region) {
-                        // اگر regions خالی بود، منظور همه مناطق است
-                        if ($region->regions==[] || in_array($order->shipping_city, $region->regions)) {
-                            // مطابقت نوع هزینه حمل‌ونقل با محصول
-                            if ($region->cost_type == $product->cost_calculation_class) {
-                                switch ($region->cost_type) {
-                                    case 'fixed_rate':
-                                        $totalCost += $region->price; // هزینه ثابت
-                                        break;
+            // محاسبه هزینه برای هر آیتم موجود در سفارش
+            foreach ($order->orderItems as $orderItem) {
+                $product = $orderItem->product;
+                $cartValue = $orderItem->total;
+                $quantity = $orderItem->quantity;
+                $weight = $product->weight;
+                $dimensions = [
+                    'length' => $product->length,
+                    'width' => $product->width,
+                    'height' => $product->height,
+                ];
 
-                                    case 'weight_based':
-                                        $totalCost += $this->calculateWeightBasedCost($region, $weight); // محاسبه براساس وزن
-                                        break;
+                // بررسی تطابق شهر و استان با مناطق موجود
+                foreach ($transportRegions as $region) {
+                    // اگر regions خالی بود، منظور همه مناطق است
+                    if ($region->regions==[] || in_array($order->shipping_city, $region->regions) || in_array($order->shipping_province,$region->regions)) {
+                        // مطابقت نوع هزینه حمل‌ونقل با محصول
+                        if ($region->cost_type == $product->cost_calculation_class || !$product->cost_calculation_class) {
+                            switch ($region->cost_type) {
+                                case 'fixed_rate':
+                                    $totalCost += $region->price; // هزینه ثابت
+                                    break;
 
-                                    case 'volume_based':
-                                        $totalCost += $this->calculateVolumeBasedCost($region, $dimensions); // محاسبه براساس حجم
-                                        break;
+                                case 'weight_based':
+                                    $totalCost += $this->calculateWeightBasedCost($region, $weight)*$quantity; // محاسبه براساس وزن
+                                    break;
 
-                                    case 'value_based':
-                                        $totalCost += $this->calculateValueBasedCost($region, $cartValue); // محاسبه براساس ارزش
-                                        break;
+                                case 'volume_based':
+                                    $totalCost += $this->calculateVolumeBasedCost($region, $dimensions)*$quantity; // محاسبه براساس حجم
+                                    break;
 
-                                    default:
-                                        $totalCost += 0; // اگر نوع حمل‌ونقل مشخص نبود، هزینه صفر
-                                }
-                                // یک منطقه تطابق یافت، ادامه نمی‌دهیم
-                                break;
+                                case 'value_based':
+                                    $totalCost += $this->calculateValueBasedCost($region, $cartValue); // محاسبه براساس ارزش
+                                    break;
+
+                                default:
+                                    $totalCost += 0; // اگر نوع حمل‌ونقل مشخص نبود، هزینه صفر
                             }
+                            // یک منطقه تطابق یافت، ادامه نمی‌دهیم
+                            break;
                         }
                     }
                 }
-                return $totalCost;
             }
+            return $totalCost;
         }
+
 
         // اگر منطقه‌ای یافت نشود یا اطلاعات نامعتبر باشد، هزینه ارسال صفر برمی‌گردد
         return 0;

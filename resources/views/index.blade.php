@@ -6,39 +6,16 @@
 @section('content')
     <!-- Body Container -->
     <div id="page-content">
-        <!--Home Slideshow   1 | 2 | 3 -->
-        {{-- slider show --}}
-        <livewire:LoadWidget blockId="block_6" />
-        <!--End Home Slideshow-->
 
-        <!--Brand Logo-->
-        <section class="section logo-section pb-0">
-            <div class="container container-1330">
+        @foreach ($grid->settings['sequence'] as $sequence)
 
-                {{-- future menu --}}
-                <livewire:LoadWidget blockId="future_product_menu" />
+            <livewire:LoadWidget :id="$sequence" />
+            @if ($loop->iteration == $grid->settings['homePage'])
+                @break
+            @endif
 
-            </div>
-        </section>
-        <!--End Brand Logo-->
+        @endforeach
 
-        <!--Collection banner-->
-        <livewire:LoadWidget blockId="block_7" />
-        <!--End Collection banner-->
-
-        <!--Products Slider-->
-        <livewire:LoadWidget blockId="block_1" />
-        <!--End Products Slider-->
-
-
-        <!-- Landing-->
-        <livewire:LoadWidget blockId="block_10" />
-        <!--End  Landing-->
-
-
-        <!-- Blog-->
-        <livewire:LoadWidget blockId="block_4" />
-        <!--End  Blog-->
 
     </div>
     <!-- End Body Container -->

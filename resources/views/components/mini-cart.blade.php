@@ -9,7 +9,7 @@
         <div class="minicart-content">
             <ul class="m-0 clearfix">
                 @foreach ($orders->items as $order)
-                    <li class="item d-flex justify-content-center align-items-center">
+                    <li class="item d-flex justify-content-center align-items-center" data-order-id="{{ $order->id }}">
                         <a class="product-image rounded-0" href="{{ $order->link }}">
                             <img class="rounded-0 blur-up lazyload" data-src="{{ $order->img }}" src="{{ $order->img }}" alt="{{ $order->name }}" title="{{ $order->name }}" width="120" height="170" />
                         </a>
@@ -24,15 +24,29 @@
                         </div>
                         <div class="qtyDetail text-center">
                             <div class="qtyField">
-                                <a class="qtyBtn minus" href="#"><i class="icon anm anm-minus-r"></i></a>
-                                <input type="text"  value="{{ $order->quantity }}" class="cart-qty-input qty item-counter basket-items" name="count" data-product-id="{{ $order->id }}">
-                                <a class="qtyBtn plus" href="#"><i class="icon anm anm-plus-r"></i></a>
+                                <!-- دکمه کاهش تعداد -->
+                                <a class="qtyBtn minus" href="#" data-id="{{ $order->id }}">
+                                    <i class="icon anm anm-minus-r"></i>
+                                </a>
+
+                                <!-- input برای نشان دادن تعداد و تغییر آن -->
+                                <input type="text" value="{{ $order->quantity }}" class="cart-qty-input qty item-counter basket-items" name="count" data-product-id="{{ $order->id }}">
+
+                                <!-- دکمه افزایش تعداد -->
+                                <a class="qtyBtn plus" href="#" data-id="{{ $order->id }}">
+                                    <i class="icon anm anm-plus-r"></i>
+                                </a>
                             </div>
 
-                            <a href="#" class="remove"><i class="icon anm anm-times-r" data-bs-toggle="tooltip" data-bs-placement="top" title="حذف"></i></a>
+
+                            <!-- لینک برای حذف -->
+                            <a href="{{ route('cart.remove', ['id' => $order->id]) }}" class="remove">
+                                <i class="icon anm anm-times-r" data-bs-toggle="tooltip" data-bs-placement="top" title="حذف"></i>
+                            </a>
                         </div>
                     </li>
                 @endforeach
+
             </ul>
         </div>
         <div class="minicart-bottom">
@@ -57,4 +71,3 @@
         </div>
     @endif
 </div>
-

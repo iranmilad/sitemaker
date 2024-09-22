@@ -4,7 +4,7 @@
             <!--Logo-->
             <div class="logo col-4 col-sm-4 col-md-4 col-lg-1 col-xxl-1 align-self-center">
                 <a class="logoImg" href="/home"><img src="{{ $setting->settings['logo'] }}"
-                        alt="{{ $setting->settings['site_title'] }}" title="{{ $setting->settings['site_title'] }}" width="149" height="39" /></a>
+                        alt="{{ $setting->settings['site_title'] }}" title="{{ $setting->settings['site_title'] }}" width="120" height="39" /></a>
             </div>
             <!--End Logo-->
             <!--منو-->

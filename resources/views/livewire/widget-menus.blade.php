@@ -68,7 +68,7 @@
                                             src="{{ $menus->childMenus[3]->icon }}"
                                             alt = "" title="" width="645" height="246" />
                                     </div>
-                                    <div class="details middle-left">
+                                    <div class="details middle-center p-0">
                                         <div class="inner">
                                             <span class="text">{{ $menus->childMenus[3]->title  }}</span>
                                         </div>
@@ -100,7 +100,7 @@
                                             src="{{ $menus->childMenus[5]->icon }}"
                                             alt = "" title="" width="645" height="246" />
                                     </div>
-                                    <div class="details middle-left">
+                                    <div class="details middle-center p-0">
                                         <div class="inner">
                                             <span class="text">{{ $menus->childMenus[5]->title  }}</span>
                                         </div>
@@ -132,7 +132,7 @@
                                             src="{{ $menus->childMenus[7]->icon }}"
                                             alt = "" title="" width="645" height="246" />
                                     </div>
-                                    <div class="details middle-left">
+                                    <div class="details middle-center p-0">
                                         <div class="inner">
                                             <span class="text">{{ $menus->childMenus[7]->title  }}</span>
                                         </div>
@@ -151,18 +151,21 @@
 
 
     @elseif (isset($options['type']) && $options['type'] === 'features_menu')
-        <div class="brands-list">
-            <div class="brands-row logo-bar logo-slider-6items gp10 arwOut5 hov-arrow" dir="ltr">
-                @foreach ($menus->childMenus  as $menu)
-                    <div class="brands-logo">
-                        <a href="{{  $menu->link  }}" class="zoom-scal zoom-scal-nopb">
-                            <img class="blur-up lazyload" src="{{  $menu->icon  }}" alt="{{ $menu->title }}" title="{{ $menu->title }}"  width="80" height="80" />
-                        </a>
+        <section class="section logo-section pb-0">
+            <div class="container container-1330">
+                <div class="brands-list">
+                    <div class="brands-row logo-bar logo-slider-6items gp10 arwOut5 hov-arrow" dir="ltr">
+                        @foreach ($menus->childMenus  as $menu)
+                            <div class="brands-logo">
+                                <a href="{{  $menu->link  }}" class="zoom-scal zoom-scal-nopb">
+                                    <img class="blur-up lazyload" src="{{  $menu->icon  }}" alt="{{ $menu->title }}" title="{{ $menu->title }}"  width="80" height="80" />
+                                </a>
+                            </div>
+                        @endforeach
                     </div>
-                @endforeach
+                </div>
             </div>
-        </div>
-
+        </section>
     @elseif (isset($options['type']) && $options['type'] === 'menu_category')
         @if ($menus)
             <div class="collection-slider-6items gp10 slick-arrow-dots sub-collection section pt-0" dir="ltr">

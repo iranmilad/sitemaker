@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
-    <link rel="shortcut icon" href="{{ asset('storage/images/favicon.png') }}" />
+    <link rel="shortcut icon" href="{{ $setting->settings['favicon'] }}" />
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/app.css') }}">
     @yield('css')
 </head>
@@ -22,7 +22,9 @@
         <!--End Top Header-->
 
         <!--Header  1 | 4 | 5 | 6 | 8 -->
-        @include('partials.header.header1')
+
+
+        @include('partials.header.header'.$theme->settings['header'])
         <!--End Header-->
 
         <!--Mobile Menu-->
@@ -32,7 +34,7 @@
         @yield('content')
 
         <!--Footer  1 | 2 | 3 | 4 | 6 | 7 | 8 -->
-        @include('partials.footer.footer1')
+        @include('partials.footer.footer'.$theme->settings['footer'])
         <!--End Footer-->
 
         <!--Scoll Top-->
@@ -53,6 +55,7 @@
         <script src="{{ Vite::asset('resources/js/app.js') }}"></script>
         @livewireScripts
         @yield('js')
+
 
     </div>
     <!--End Page Wrapper-->

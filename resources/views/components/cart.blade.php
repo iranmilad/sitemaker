@@ -1,6 +1,6 @@
 <tr class="cart-row cart-flex position-relative">
     <td class="cart-delete text-center small-hide">
-        <a href="{{ $order->link }}" class="cart-remove remove-icon position-static" data-bs-toggle="tooltip"   data-bs-placement ="top" title="حذف به سبد خرید"><i class="icon anm anm-times-r"></i></a></td>
+        <a href="{{ route('cart.remove', ['id' => $order->id]) }}" class="cart-remove remove-icon position-static" data-bs-toggle="tooltip"   data-bs-placement ="top" title="حذف به سبد خرید"><i class="icon anm anm-times-r"></i></a></td>
     <td class="cart-image cart-flex-item">
         <a href="{{ $order->link }}">
             <img class="cart-image rounded-0 blur-up lazyload"  data-src="{{ $order->img }}"   src="{{ $order->img }}"  alt="{{ $order->name }}" width="120" height="170" /></a>
@@ -10,11 +10,13 @@
             <a href="{{ $order->link }}">{{ $order->name }}</a>
         </div>
         <div class="cart-meta-text">
-            @foreach($order->options as $option)
-                @foreach ($option as $key=>$value)
-                        {{ $key }}:{{ $value }}<br>
+            @if ($order->options)
+                @foreach($order->options as $option)
+                    @foreach ($option as $key=>$value)
+                            {{ $key }}:{{ $value }}<br>
+                    @endforeach
                 @endforeach
-            @endforeach
+            @endif
 
         </div>
         <div class="cart-price d-md-none">
@@ -22,7 +24,7 @@
         </div>
     </td>
     <td class="cart-price cart-flex-item text-center small-hide">
-        <span class="money">{{ $order->sale_price!=0 ? $order->sale_price : $order->price }} تومان</span>
+        <span class="money">{{ $order->sale_price!=0 ? $order->sale_price  : $order->price  }} تومان</span>
     </td>
     <td class="cart-update-wrapper cart-flex-item text-end text-md-center">
         <div class="cart-qty d-flex justify-content-end justify-content-md-center">
@@ -32,7 +34,7 @@
                 <a class="qtyBtn plus" href="#;"><i  class="icon anm anm-plus-r"></i></a>
             </div>
         </div>
-        <a href="#" title="حذف"
+        <a href="{{ route('cart.remove', ['id' => $order->id]) }}" title="حذف"
             class="removeMb d-md-none d-inline-block text-decoration-underline mt-2 ms-3">حذف</a>
     </td>
     <td class="cart-price cart-flex-item text-center small-hide">

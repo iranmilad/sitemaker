@@ -45,15 +45,7 @@
                     <li class="list-inline-item"><a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="یوتیوب"><i class="icon anm anm-youtube"></i></a></li>
                 </ul>
                 <div class="copytext text-center col-12 col-md-12 col-lg-4 order-2 order-lg-0 mt-3 mt-lg-0">&copy; 2024 تمامی حقوق برای فروشگاه ساز محفوظ است.</div>
-                <ul class="payment-icons d-flex-center justify-content-center justify-content-sm-end col-12 col-sm-6 col-lg-4 mt-3 mt-sm-0 d-none">
-                    <li><i class="icon anm anm-cc-visa"></i></li>
-                    <li><i class="icon anm anm-cc-mastercard"></i></li>
-                    <li><i class="icon anm anm-cc-amex"></i></li>
-                    <li><i class="icon anm anm-cc-paypal"></i></li>
-                    <li><i class="icon anm anm-cc-discover"></i></li>
-                    <li><i class="icon anm anm-cc-stripe"></i></li>
-                    <li><i class="icon anm anm-cc-jcb"></i></li>
-                </ul>
+
             </div>
         </div>
     </div>

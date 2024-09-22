@@ -60,21 +60,16 @@
                                             <div class="block-content">
                                                 <h3 class="title mb-3">روش های ارسال</h3>
                                                 <div class="delivery-methods-content">
-                                                    <div class="customRadio clearfix">
-                                                        <input id="formcheckoutRadio1" value="normal" name="deliveryType" type="radio" class="radio" {{($orders->cart->deliveryType=='normal') ? 'checked' :''}}>
-                                                        <label for="formcheckoutRadio1" class="mb-0">پست عادی 10 هزار تومان (3-7 روز)</label>
-                                                    </div>
-                                                    <div class="customRadio clearfix">
-                                                        <input id="formcheckoutRadio2" value="express" name="deliveryType" type="radio" class="radio" {{($orders->cart->deliveryType=='express') ? 'checked' :''}}>
-                                                        <label for="formcheckoutRadio2" class="mb-0">پست سفارشی 20 هزار تومان (1-2 روز)</label>
-                                                    </div>
-                                                    <div class="customRadio clearfix mb-0">
-                                                        <input id="formcheckoutRadio3" value="bike" name="deliveryType" type="radio" class="radio" {{($orders->cart->deliveryType=='bike') ? 'checked' :''}}>
-                                                        <label for="formcheckoutRadio3" class="mb-0">ارسال پیک موتوری 70 هزار تومان (روز جاری)</label>
-                                                    </div>
+                                                    @foreach ($deliveryOptions as $key => $value)
+                                                        <div class="customRadio clearfix">
+                                                            <input id="formcheckoutRadio{{ $key }}" value="{{ $key }}" name="deliveryType" type="radio" class="radio" {{ ($orders->deliveryType == $key) ? 'checked' : '' }}>
+                                                            <label for="formcheckoutRadio{{ $key }}" class="mb-0">{{ $key }} ({{ $value }} تومان )</label>
+                                                        </div>
+                                                    @endforeach
                                                 </div>
                                             </div>
                                         </div>
+
                                         <!--پایان روش های ارسال-->
                                     </div>
                                     <div class="row col-md-12 mt-2">

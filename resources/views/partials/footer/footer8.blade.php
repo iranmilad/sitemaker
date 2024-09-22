@@ -4,7 +4,7 @@
             <div class="row align-items-center">
                 <div class="col-12 col-sm-12 col-md-3 col-lg-3">
                     <div class="ftr-logo text-md-start">
-                        <img class="logoImg" src="{{ asset('storage/images/logo-white.png')}}" alt="قالب Html چند منظوره Hema" title="قالب Html چند منظوره Hema" width="149" height="39" />
+                        <img class="logoImg" src="{{ $setting->settings['logo'] }}" alt="{{ $setting->settings['site_title'] }}" title="{{ $setting->settings['site_title'] }}" width="149" height="39" />
                     </div>
                 </div>
                 <div class="col-12 col-sm-12 col-md-6 col-lg-6">

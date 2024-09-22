@@ -4,7 +4,7 @@
                 <div class="row align-iteme-center">
                     <div class="col-12 col-sm-12 col-md-2 col-lg-3">
                         <div class="ftr-logo text-md-start">
-                            <img class="logoImg" src="{{ asset('storage/images/logo-bag.png')}}" alt="قالب Html چند منظوره Hema" title="قالب Html چند منظوره Hema" width="149" height="39" />
+                            <img class="logoImg" src="{{ $setting->settings['logo'] }}" alt="{{ $setting->settings['site_title'] }}" title="{{ $setting->settings['site_title'] }}" width="149" height="39" />
                         </div>
                     </div>
                     <div class="col-12 col-sm-12 col-md-6 col-lg-6 my-3 my-md-0 d-none">
@@ -64,7 +64,7 @@
         <div class="footer-bottom clearfix">
             <div class="container">
                 <div class="d-flex-center flex-column justify-content-md-between flex-md-row-reverse">
-                    <img class="paymentIcons-img mb-3 mb-md-0" src="{{ asset('storage/images/icons/ftr-payment-icons.png')}}" alt="نمادهای پرداخت" width="309" height="32" />
+
                     <div class="copytext">&copy; 2024 تمامی حقوق برای فروشگاه ساز محفوظ است.</div>
                 </div>
             </div>
