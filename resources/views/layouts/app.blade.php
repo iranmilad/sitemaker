@@ -9,6 +9,21 @@
     <title>@yield('title')</title>
     <link rel="shortcut icon" href="{{ $setting->settings['favicon'] }}" />
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/app.css') }}">
+
+
+    @vite('resources/fonts/'.$style->settings['font'].'/font.css')
+
+    @vite('resources/css/global-style.css')
+
+
+    <style>
+        :root {
+            /* --font-family: IranYekan, "Aldhabi"; */
+            --font-family: "{{ $style->settings['font'] }}", tahoma;
+        }
+    </style>
+
+
     @yield('css')
 </head>
 

@@ -12,6 +12,11 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/css/vendor/photoswipe.min.css',
+                'resources/css/global-style.css',
+                'resources/fonts/iranyekan/font.css',
+                'resources/fonts/iransans/font.css',
+                'resources/fonts/dana/font.css',
+                'resources/fonts/vazir/font.css',
                 'resources/js/main.js',
                 'resources/js/app.js',
                 'resources/js/vendor/jquery.elevatezoom.js',
