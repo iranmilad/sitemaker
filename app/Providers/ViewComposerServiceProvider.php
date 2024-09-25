@@ -24,15 +24,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('partials.footer.*', function ($view) {
-            // گرفتن همه‌ی منوها
 
-            // laravel model get menu_id is null
-            $menus = Menu::whereNull('menu_id')->get()->keyBy('alias');
-
-            $view->with('menus', $menus);
-
-        });
 
         View::composer(['*'], function ($view) {
             $cartCount = 0;
@@ -44,11 +36,15 @@ class ViewComposerServiceProvider extends ServiceProvider
             $grid = Setting::where('group', "grid")->first();
             $theme = Setting::where('group', "theme")->first();
             $style = Setting::where('group', "style")->first();
+            // laravel model get menu_id is null
+            $menus = Menu::whereNull('menu_id')->get()->keyBy('alias');
+            //dd($menus);
             $view->with('cartCount', $cartCount);
             $view->with('setting', $setting);
             $view->with('grid', $grid);
             $view->with('theme', $theme);
             $view->with('style', $style);
+            $view->with('menus', $menus);
         });
 
 

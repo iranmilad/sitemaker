@@ -7,38 +7,38 @@
 
 
                 <div class="section-header">
-                    <h2>{{ $menus->title }}</h2>
+                    <h2>{{ $menu->title }}</h2>
                 </div>
 
                 <div class="collection-banner-grid">
                     <div class="row sp-row">
                         <div class="col-12 col-sm-6 col-md-6 col-lg-6 collection-banner-item">
                             <div class="collection-item sp-col">
-                                <a href="{{ $menus->childMenus[0]->link  }}" class="zoom-scal">
+                                <a href="{{ $menu->childMenus[0]->link  }}" class="zoom-scal">
                                     <div class="img">
                                         <img class="blur-up lazyload"
-                                            data-src="{{ $menus->childMenus[0]->icon }}"
-                                            src="{{ $menus->childMenus[0]->icon }}"
+                                            data-src="{{ $menu->childMenus[0]->icon }}"
+                                            src="{{ $menu->childMenus[0]->icon }}"
                                             alt = "" title="" width="645" height="245" />
                                     </div>
                                     <div class="details middle-center p-0">
                                         <div class="inner">
-                                            <span class="text">{{ $menus->childMenus[0]->title  }}</span>
+                                            <span class="text">{{ $menu->childMenus[0]->title  }}</span>
                                         </div>
                                     </div>
                                 </a>
                             </div>
                             <div class="collection-item sp-col">
-                                <a href="{{ $menus->childMenus[1]->link  }}" class="zoom-scal">
+                                <a href="{{ $menu->childMenus[1]->link  }}" class="zoom-scal">
                                     <div class="img">
                                         <img class="blur-up lazyload"
-                                            data-src="{{ $menus->childMenus[1]->icon }}"
-                                            src="{{ $menus->childMenus[1]->icon }}"
+                                            data-src="{{ $menu->childMenus[1]->icon }}"
+                                            src="{{ $menu->childMenus[1]->icon }}"
                                             alt="collection " title="" width="645" height="416" />
                                     </div>
                                     <div class="details middle-center p-0">
                                         <div class="inner">
-                                            <span class="text">{{ $menus->childMenus[1]->title  }}</span>
+                                            <span class="text">{{ $menu->childMenus[1]->title  }}</span>
                                         </div>
                                     </div>
                                 </a>
@@ -46,31 +46,31 @@
                         </div>
                         <div class="col-12 col-sm-6 col-md-6 col-lg-6 collection-banner-item">
                             <div class="collection-item sp-col">
-                                <a href="{{ $menus->childMenus[2]->link  }}" class="zoom-scal">
+                                <a href="{{ $menu->childMenus[2]->link  }}" class="zoom-scal">
                                     <div class="img">
                                         <img class="blur-up lazyload"
-                                            data-src="{{ $menus->childMenus[2]->icon }}"
-                                            src="{{ $menus->childMenus[2]->icon }}"
+                                            data-src="{{ $menu->childMenus[2]->icon }}"
+                                            src="{{ $menu->childMenus[2]->icon }}"
                                             alt = "" title="" width="645" height="416" />
                                     </div>
                                     <div class="details middle-center p-0">
                                         <div class="inner">
-                                            <span class="text">{{ $menus->childMenus[2]->title  }}</span>
+                                            <span class="text">{{ $menu->childMenus[2]->title  }}</span>
                                         </div>
                                     </div>
                                 </a>
                             </div>
                             <div class="collection-item sp-col">
-                                <a href="{{ $menus->childMenus[3]->link  }}" class="zoom-scal">
+                                <a href="{{ $menu->childMenus[3]->link  }}" class="zoom-scal">
                                     <div class="img">
                                         <img class="blur-up lazyload"
-                                            data-src="{{ $menus->childMenus[3]->icon }}"
-                                            src="{{ $menus->childMenus[3]->icon }}"
+                                            data-src="{{ $menu->childMenus[3]->icon }}"
+                                            src="{{ $menu->childMenus[3]->icon }}"
                                             alt = "" title="" width="645" height="246" />
                                     </div>
                                     <div class="details middle-center p-0">
                                         <div class="inner">
-                                            <span class="text">{{ $menus->childMenus[3]->title  }}</span>
+                                            <span class="text">{{ $menu->childMenus[3]->title  }}</span>
                                         </div>
                                     </div>
                                 </a>
@@ -78,31 +78,31 @@
                         </div>
                         <div class="col-12 col-sm-6 col-md-6 col-lg-6 collection-banner-item">
                             <div class="collection-item sp-col">
-                                <a href="{{ $menus->childMenus[4]->link  }}" class="zoom-scal">
+                                <a href="{{ $menu->childMenus[4]->link  }}" class="zoom-scal">
                                     <div class="img">
                                         <img class="blur-up lazyload"
-                                            data-src="{{ $menus->childMenus[4]->icon }}"
-                                            src="{{ $menus->childMenus[4]->icon }}"
+                                            data-src="{{ $menu->childMenus[4]->icon }}"
+                                            src="{{ $menu->childMenus[4]->icon }}"
                                             alt = "" title="" width="645" height="416" />
                                     </div>
                                     <div class="details middle-center p-0">
                                         <div class="inner">
-                                            <span class="text">{{ $menus->childMenus[4]->title  }}</span>
+                                            <span class="text">{{ $menu->childMenus[4]->title  }}</span>
                                         </div>
                                     </div>
                                 </a>
                             </div>
                             <div class="collection-item sp-col">
-                                <a href="{{ $menus->childMenus[5]->link  }}" class="zoom-scal">
+                                <a href="{{ $menu->childMenus[5]->link  }}" class="zoom-scal">
                                     <div class="img">
                                         <img class="blur-up lazyload"
-                                            data-src="{{ $menus->childMenus[5]->icon }}"
-                                            src="{{ $menus->childMenus[5]->icon }}"
+                                            data-src="{{ $menu->childMenus[5]->icon }}"
+                                            src="{{ $menu->childMenus[5]->icon }}"
                                             alt = "" title="" width="645" height="246" />
                                     </div>
                                     <div class="details middle-center p-0">
                                         <div class="inner">
-                                            <span class="text">{{ $menus->childMenus[5]->title  }}</span>
+                                            <span class="text">{{ $menu->childMenus[5]->title  }}</span>
                                         </div>
                                     </div>
                                 </a>
@@ -110,31 +110,31 @@
                         </div>
                         <div class="col-12 col-sm-6 col-md-6 col-lg-6 collection-banner-item">
                             <div class="collection-item sp-col">
-                                <a href="{{ $menus->childMenus[6]->link  }}" class="zoom-scal">
+                                <a href="{{ $menu->childMenus[6]->link  }}" class="zoom-scal">
                                     <div class="img">
                                         <img class="blur-up lazyload"
-                                            data-src="{{ $menus->childMenus[6]->icon }}"
-                                            src="{{ $menus->childMenus[6]->icon }}"
+                                            data-src="{{ $menu->childMenus[6]->icon }}"
+                                            src="{{ $menu->childMenus[6]->icon }}"
                                             alt = "" title="" width="645" height="416" />
                                     </div>
                                     <div class="details middle-center p-0">
                                         <div class="inner">
-                                            <span class="text">{{ $menus->childMenus[6]->title  }}</span>
+                                            <span class="text">{{ $menu->childMenus[6]->title  }}</span>
                                         </div>
                                     </div>
                                 </a>
                             </div>
                             <div class="collection-item sp-col">
-                                <a href="{{ $menus->childMenus[7]->link  }}" class="zoom-scal">
+                                <a href="{{ $menu->childMenus[7]->link  }}" class="zoom-scal">
                                     <div class="img">
                                         <img class="blur-up lazyload"
-                                            data-src="{{ $menus->childMenus[7]->icon }}"
-                                            src="{{ $menus->childMenus[7]->icon }}"
+                                            data-src="{{ $menu->childMenus[7]->icon }}"
+                                            src="{{ $menu->childMenus[7]->icon }}"
                                             alt = "" title="" width="645" height="246" />
                                     </div>
                                     <div class="details middle-center p-0">
                                         <div class="inner">
-                                            <span class="text">{{ $menus->childMenus[7]->title  }}</span>
+                                            <span class="text">{{ $menu->childMenus[7]->title  }}</span>
                                         </div>
                                     </div>
                                 </a>
@@ -151,11 +151,12 @@
 
 
     @elseif (isset($options['type']) && $options['type'] === 'features_menu')
+
         <section class="section logo-section pb-0">
             <div class="container container-1330">
                 <div class="brands-list">
                     <div class="brands-row logo-bar logo-slider-6items gp10 arwOut5 hov-arrow" dir="ltr">
-                        @foreach ($menus->childMenus  as $menu)
+                        @foreach ($menu->childMenus  as $menu)
                             <div class="brands-logo">
                                 <a href="{{  $menu->link  }}" class="zoom-scal zoom-scal-nopb">
                                     <img class="blur-up lazyload" src="{{  $menu->icon  }}" alt="{{ $menu->title }}" title="{{ $menu->title }}"  width="80" height="80" />
@@ -167,9 +168,9 @@
             </div>
         </section>
     @elseif (isset($options['type']) && $options['type'] === 'menu_category')
-        @if ($menus)
+        @if ($menu)
             <div class="collection-slider-6items gp10 slick-arrow-dots sub-collection section pt-0" dir="ltr">
-                @foreach ($menus->childMenus  as $menu)
+                @foreach ($menu->childMenus  as $menu)
                         <div class="category-item zoomscal-hov">
                             <a href="{{ $menu->link }}" class="category-link clr-none">
                                 <div class="zoom-scal zoom-scal-nopb rounded-0"><img class="rounded-0 blur-up lazyload"

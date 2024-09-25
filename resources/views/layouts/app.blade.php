@@ -8,20 +8,26 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
     <link rel="shortcut icon" href="{{ $setting->settings['favicon'] }}" />
+    @vite('resources/css/global-style.css')
+    <style>
+        :root {
+            --font-family: {{ $style->settings['font'] ?? 'IranYekan' }}, "Aldhabi"; /* فونت پیشفرض */
+            --primary: {{ $style->settings['primary'] ?? '#2f415d' }}; /* رنگ اصلی */
+            --btn-hover: {{ $style->settings['btn-hover'] ?? '#e96f84' }}; /* رنگ هاور */
+            --btn-font-color: {{ $style->settings['btn-font-color'] ?? '#fff' }}; /* رنگ متن دکمه */
+            --header-bg: {{ $style->settings['header-bg'] ?? '#f8f8fa' }}; /* رنگ پس‌زمینه هدر */
+            --bg-background: {{ $style->settings['bg-background'] }}; /* رنگ پس‌زمینه */
+            --header-color: {{ $style->settings['header-color'] ?? '#000' }}; /* رنگ عناوین */
+            --footer-bg: {{ $style->settings['footer-bg'] ?? '#020202' }}; /* رنگ فوتر */
+        }
+
+    </style>
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/app.css') }}">
 
 
     @vite('resources/fonts/'.$style->settings['font'].'/font.css')
 
-    @vite('resources/css/global-style.css')
 
-
-    <style>
-        :root {
-            /* --font-family: IranYekan, "Aldhabi"; */
-            --font-family: "{{ $style->settings['font'] }}", tahoma;
-        }
-    </style>
 
 
     @yield('css')

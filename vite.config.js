@@ -11,6 +11,7 @@ export default defineConfig({
             },
             input: [
                 'resources/css/app.css',
+                'resources/css/global-style.css',
                 'resources/css/vendor/photoswipe.min.css',
                 'resources/css/global-style.css',
                 'resources/fonts/iranyekan/font.css',

@@ -1,9 +1,9 @@
-@if ($style=='1')
+@if ($menu_style=='1')
     <div>
-        <h4 class="h4">{{ $menus->title }}</h4>
+        <h4 class="h4">{{ $menu->title }}</h4>
         <ul>
-            @foreach ($menus->childMenus  as $menu)
-                <li ><a href="{{ $menu->link  }}">{{ $menu->title  }}</a></li>
+            @foreach ($menu->childMenus  as $item)
+                <li ><a href="{{ $item->link  }}">{{ $item->title  }}</a></li>
             @endforeach
         </ul>
     </div>

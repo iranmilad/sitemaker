@@ -11,6 +11,7 @@
 }
 body{
     direction: rtl!important;
+    background-color: var(--bg-background);
 }
 body,
 button,
@@ -696,7 +697,7 @@ h3,
 h4,
 h5,
 h6 {
-    color: #000;
+    color: var(--header-color);
     margin: 0 0 20px;
     font-family: var(--font-family);
     font-weight: 700;
@@ -847,9 +848,9 @@ p:last-child {
 .btn,
 .btn-primary {
     font-family: var(--font-family);
-    background-color: #2f415d;
-    color: #fff;
-    border: 1px solid #2f415d;
+    background-color: var(--primary);
+    color: var(--btn-font-color);
+    border: 1px solid var(--primary);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -878,18 +879,18 @@ p:last-child {
 
 .btn:focus,
 .btn:hover {
-    background-color: #e96f84;
+    background-color: var(--btn-hover);
     color: #fff;
-    border-color: #e96f84;
+    border-color: var(--btn-hover);
     text-decoration: none;
     opacity: 1
 }
 
 .btn-secondary,
 .btn-secondary:focus {
-    background-color: #e96f84;
+    background-color: var(--btn-hover);
     color: #fff;
-    border: 1px solid #e96f84
+    border: 1px solid var(--btn-hover)
 }
 
 .btn-gray:hover,
@@ -3451,7 +3452,7 @@ textarea:-ms-input-placeholder {
 .vertical-menu-content ul>li .nav-link:hover,
 .video-button .icon:hover,
 .video-popup-content .icon:hover {
-    color: #e96f84
+    color: var(--btn-hover)
 }
 
 .vertical-menu-content .moreCategories {
@@ -4334,8 +4335,8 @@ textarea:-ms-input-placeholder {
 }
 
 .category-item .details.whiteText .btn-brd:hover {
-    color: #e96f84;
-    border-color: #e96f84
+    color: var(--btn-hover);
+    border-color: var(--btn-hover)
 }
 
 .category-item.overlay-content .category-link,
@@ -4705,7 +4706,7 @@ textarea:-ms-input-placeholder {
 .index-demo4 .btn-secondary:hover,
 .index-demo4 .button-set-top .btn-icon:focus,
 .index-demo4 .button-set-top .btn-icon:hover {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #000;
     border-color: #000
 }
@@ -4714,14 +4715,14 @@ textarea:-ms-input-placeholder {
 .index-demo2 .btn-primary:hover,
 .index-demo2 .btn:focus,
 .index-demo2 .btn:hover {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #333;
     border-color: #333
 }
 
 .collection-style4 .category-link:hover .btn,
 .index-demo2 .btn-secondary {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #333;
     border-color: #333
 }
@@ -4865,7 +4866,7 @@ textarea:-ms-input-placeholder {
 .index-demo3 .cnrLangList li a.active,
 .index-demo3 .cnrLangList li a:hover,
 .index-demo3 .footer-newsletter .input-group>.btn:hover {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #cb8161;
     border-color: #cb8161
 }
@@ -4931,7 +4932,7 @@ textarea:-ms-input-placeholder {
 
 .index-demo3 #site-scroll:hover,
 .index-demo3 .btn-primary:hover {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #b87558;
     border-color: #b87558
 }
@@ -5091,7 +5092,7 @@ textarea:-ms-input-placeholder {
 
 .index-demo4 #site-scroll,
 .index-demo4 .btn-primary {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #000;
     border-color: #000;
     border-radius: 0
@@ -5099,14 +5100,14 @@ textarea:-ms-input-placeholder {
 
 .index-demo4 #site-scroll:hover,
 .index-demo4 .btn-primary:hover {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #3a3a3a;
     border-color: #3a3a3a
 }
 
 .index-demo4 .btn-secondary,
 .index-demo4 .button-set-top .btn-icon {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #40667b;
     border-color: #40667b
 }
@@ -5121,7 +5122,7 @@ textarea:-ms-input-placeholder {
 
 .index-demo4 .btn-outline-primary:hover {
     background-color: #f4aa1b;
-    color: #fff;
+    color: var(--btn-font-color);
     border-color: #f4aa1b
 }
 
@@ -5460,7 +5461,7 @@ textarea:-ms-input-placeholder {
 .index-demo5 #site-scroll,
 .index-demo5 .btn-primary,
 .index-demo5 .button-set .btn-icon {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #7bb5d8;
     border-color: #7bb5d8
 }
@@ -5468,7 +5469,7 @@ textarea:-ms-input-placeholder {
 .index-demo5 #site-scroll:hover,
 .index-demo5 .btn-primary:hover,
 .index-demo5 .button-set .btn-icon:hover {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #6dacd2;
     border-color: #6dacd2
 }
@@ -5611,7 +5612,8 @@ textarea:-ms-input-placeholder {
 
 .header-6 .header-main {
     padding-top: 20px;
-    padding-bottom: 20px
+    padding-bottom: 20px;
+    background-color: var(--header-bg);
 }
 
 .header-6 .menu-outer {
@@ -5709,13 +5711,13 @@ textarea:-ms-input-placeholder {
 
 .index-demo6 #site-scroll:hover,
 .index-demo6 .btn-primary:hover {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #d9773b;
     border-color: #d9773b
 }
 
 .index-demo6 .btn-secondary {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #333;
     border-color: #333;
     border-radius: 4px
@@ -5730,7 +5732,7 @@ textarea:-ms-input-placeholder {
 
 .index-demo6 .btn-outline-primary:hover {
     background-color: #f69c63;
-    color: #fff;
+    color: var(--btn-font-color);
     border-color: #f69c63
 }
 
@@ -5944,7 +5946,7 @@ textarea:-ms-input-placeholder {
 }
 
 .index-demo7 .select-wrap .select-ul li:hover {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #2b7c63
 }
 
@@ -5980,14 +5982,14 @@ textarea:-ms-input-placeholder {
 .index-demo7 #site-scroll,
 .index-demo7 .btn-primary,
 .index-demo7 .collection-banner-grid .sale-banner .details .btn {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #60a103;
     border-color: #60a103
 }
 
 .index-demo7 #site-scroll:hover,
 .index-demo7 .btn-primary:hover {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #528c01;
     border-color: #528c01
 }
@@ -6001,7 +6003,7 @@ textarea:-ms-input-placeholder {
 
 .index-demo7 .btn-outline-primary:hover {
     background-color: #60a103;
-    color: #fff;
+    color: var(--btn-font-color);
     border-color: #60a103
 }
 
@@ -6081,14 +6083,14 @@ textarea:-ms-input-placeholder {
 }
 
 .index-demo7 .collection-banner-grid .sale-banner .details .btn:hover {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #568e06;
     border-color: #568e06
 }
 
 .index-demo7 .hero-saleTime.dark.saleTime-circle .count-inner {
     background: #2b7c63;
-    color: #fff;
+    color: var(--btn-font-color);
     border-color: #2b7c63
 }
 
@@ -6158,7 +6160,7 @@ textarea:-ms-input-placeholder {
 
 .index-demo8 .btn-primary {
     background-color: #000;
-    color: #fff;
+    color: var(--btn-font-color);
     border: 1px solid #000;
     border-radius: 0 !important
 }
@@ -6166,13 +6168,13 @@ textarea:-ms-input-placeholder {
 .index-demo8 .btn-primary:focus,
 .index-demo8 .btn-primary:hover {
     background-color: #222;
-    color: #fff;
+    color: var(--btn-font-color);
     border-color: #222
 }
 
 .index-demo8 .btn-secondary {
     background-color: #333;
-    color: #fff;
+    color: var(--btn-font-color);
     border: 1px solid #333;
     border-radius: 0 !important
 }
@@ -6180,7 +6182,7 @@ textarea:-ms-input-placeholder {
 .index-demo8 .btn-secondary:focus,
 .index-demo8 .btn-secondary:hover {
     background-color: #111;
-    color: #fff;
+    color: var(--btn-font-color);
     border-color: #111
 }
 
@@ -6198,6 +6200,7 @@ textarea:-ms-input-placeholder {
 }
 
 .header-8 .header-main {
+    background-color: var(--header-bg);
     padding-top: 15px;
     padding-bottom: 15px
 }
@@ -6328,12 +6331,12 @@ textarea:-ms-input-placeholder {
 }
 
 .index-demo8 #site-scroll {
-    color: #fff;
+    color: var(--btn-font-color);
     background: #000
 }
 
 .index-demo8 #site-scroll:hover {
-    color: #fff;
+    color: var(--btn-font-color);
     background: #333
 }
 
@@ -6362,7 +6365,7 @@ textarea:-ms-input-placeholder {
 }
 
 .header-9 .header-main {
-    background-color: #f8f8fa;
+    background-color: var(--header-bg);
     padding-top: 15px;
     padding-bottom: 15px
 }
@@ -6418,7 +6421,7 @@ textarea:-ms-input-placeholder {
 
 .index-demo9 .cnrLangList li a.active,
 .index-demo9 .cnrLangList li a:hover {
-    color: #fff;
+    color: var(--btn-font-color);
     border-color: #f57c00;
     background: #f57c00
 }
@@ -6471,7 +6474,7 @@ textarea:-ms-input-placeholder {
 
 .index-demo9 #site-scroll,
 .index-demo9 .btn-primary {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #f57c00;
     border-color: #f57c00
 }
@@ -6479,7 +6482,7 @@ textarea:-ms-input-placeholder {
 .index-demo9 #site-scroll:hover,
 .index-demo9 .btn-primary:hover,
 .index-demo9 .footer-newsletter .input-group>.btn:hover {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #ff9426;
     border-color: #ff9426;
     opacity: 1
@@ -6495,14 +6498,14 @@ textarea:-ms-input-placeholder {
 .index-demo9 .btn-outline-primary:hover,
 .index-demo9 .collection-banners.four-bnr .collection-item:hover .btn-light {
     background-color: #f57c00;
-    color: #fff;
+    color: var(--btn-font-color);
     border-color: #f57c00
 }
 
 .index-demo9 .btn-secondary,
 .index-demo9 .btn-secondary:focus {
     background-color: #3e516a;
-    color: #fff;
+    color: var(--btn-font-color);
     border: 1px solid #3e516a
 }
 
@@ -6516,7 +6519,7 @@ textarea:-ms-input-placeholder {
 
 .index-demo9 .btn-secondary:hover {
     background-color: #30507b;
-    color: #fff;
+    color: var(--btn-font-color);
     border-color: #30507b
 }
 
@@ -6567,7 +6570,7 @@ textarea:-ms-input-placeholder {
 }
 
 .index-demo9 .grid-products .button-set-top .btn-icon {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #3e516a;
     font-size: 14px;
     width: 30px;
@@ -6623,7 +6626,7 @@ textarea:-ms-input-placeholder {
 
 .index-demo10 .btn,
 .index-demo10 .btn-primary {
-    color: #fff;
+    color: var(--btn-font-color);
     border-radius: 0 !important;
     -webkit-border-radius: 0 !important
 }
@@ -6633,7 +6636,7 @@ textarea:-ms-input-placeholder {
 .index-demo10 .btn-primary:hover,
 .index-demo10 .btn:focus,
 .index-demo10 .btn:hover {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #f23636;
     border-color: #f23636
 }
@@ -6662,13 +6665,13 @@ textarea:-ms-input-placeholder {
 .index-demo10 .btn-secondary,
 .index-demo10 .btn-secondary:focus {
     background-color: #090909;
-    color: #fff;
+    color: var(--btn-font-color);
     border: 1px solid #090909
 }
 
 .index-demo10 .btn-secondary:hover {
     background-color: #444;
-    color: #fff;
+    color: var(--btn-font-color);
     border-color: #444
 }
 
@@ -6858,7 +6861,7 @@ textarea:-ms-input-placeholder {
 }
 
 .social-sharing .btn:hover {
-    color: #e96f84;
+    color: var(--btn-hover);
     background-color: transparent
 }
 
@@ -6949,8 +6952,8 @@ textarea:-ms-input-placeholder {
 
 .btn.brd-link:hover {
     background: 0 0;
-    border-color: #e96f84;
-    color: #e96f84
+    border-color: var(--btn-hover);
+    color: var(--btn-hover)
 }
 
 .comment-img {
@@ -7070,7 +7073,7 @@ textarea:-ms-input-placeholder {
 .sidebar-categories .sub-level>a.active:after {
     content: '\ebd1';
     font-family: annimex-icons;
-    color: #e96f84
+    color: var(--btn-hover)
 }
 
 .morelist .more {
@@ -7246,14 +7249,14 @@ textarea:-ms-input-placeholder {
 }
 
 .hoverDetails .product-des .button-set .btn-icon {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #333
 }
 
 .hoverDetails .product-des .button-set .btn-icon:hover,
 .tracking-steps .step.current {
-    color: #fff;
-    background-color: #e96f84
+    color: var(--btn-font-color);
+    background-color: var(--btn-hover)
 }
 
 .product-availability {
@@ -7412,7 +7415,7 @@ textarea:-ms-input-placeholder {
 }
 
 .button-set .btn-icon:hover {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #2f415d
 }
 
@@ -7445,7 +7448,7 @@ textarea:-ms-input-placeholder {
 }
 
 .button-set-top .btn-icon {
-    color: #fff;
+    color: var(--btn-font-color);
     background-color: #333;
     font-size: 16px;
     width: 35px;
@@ -8114,9 +8117,9 @@ textarea:-ms-input-placeholder {
 }
 
 .collection-style2 .category-link:hover .btn-light {
-    background-color: #e96f84;
-    color: #fff;
-    border-color: #e96f84
+    background-color: var(--btn-hover);
+    color: var(--btn-font-color);
+    border-color: var(--btn-hover)
 }
 
 .collection-style2-page .collection-style2 .details {
@@ -9405,7 +9408,7 @@ textarea:-ms-input-placeholder {
 }
 
 .product-nav .name:hover {
-    color: #e96f84;
+    color: var(--btn-hover);
     opacity: 1
 }
 
@@ -9559,7 +9562,7 @@ textarea:-ms-input-placeholder {
 .brands-search .listing li .alpha:not(.active):hover {
     color: #333;
     background-color: #fff;
-    border-color: #e96f84
+    border-color: var(--btn-hover)
 }
 
 .brands-search-logo {
@@ -10131,7 +10134,7 @@ textarea:-ms-input-placeholder {
 
 .lookbook-shop .grid-lb .btn-shop-close:hover,
 .lookbook-shop .products .btn-shop.active {
-    background: #e96f84;
+    background: var(--btn-hover);
     color: #fff
 }
 
@@ -10404,8 +10407,8 @@ textarea:-ms-input-placeholder {
 }
 
 .footer-newsletter .input-group>.btn:hover {
-    background-color: #e96f84;
-    border-color: #e96f84;
+    background-color: var(--btn-hover);
+    border-color: var(--btn-hover);
     opacity: .8
 }
 
@@ -10723,7 +10726,7 @@ textarea:-ms-input-placeholder {
 #site-scroll {
     display: none;
     color: #fff;
-    background: #e96f84;
+    background: var(--btn-hover);
     cursor: pointer;
     font-size: 16px;
     width: 40px;

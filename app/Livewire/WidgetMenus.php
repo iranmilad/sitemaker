@@ -9,7 +9,7 @@ use Livewire\Component;
 class WidgetMenus extends Component
 {
     public $type;
-    public $menus;
+    public $menu;
     private $slug;
     public $options;
 
@@ -23,25 +23,25 @@ class WidgetMenus extends Component
 
             $alias = $this->options['alias'] ?? [];
 
-            $this->menus = Menu::where(['alias'=>$alias,])
+            $this->menu = Menu::where(['alias'=>$alias,])
             ->first();
         }
         elseif ($this->type == "menu_category") {
 
             $alias = $slug ?? null;
             if ($alias) {
-                $this->menus = Menu::where(['alias'=>$alias,])
+                $this->menu = Menu::where(['alias'=>$alias,])
                 ->first();
             }
             else{
-                $this->menus =null;
+                $this->menu =null;
             }
         }
         else {
 
             $alias = $this->options['alias'] ?? [];
 
-            $this->menus = Menu::where(['alias'=>$alias,])
+            $this->menu = Menu::where(['alias'=>$alias,])
             ->first();
         }
 
@@ -51,7 +51,7 @@ class WidgetMenus extends Component
 
     public function render()
     {
-        $menus= $this->menus;
-        return view('livewire.widget-menus',compact('menus'));
+        $menu= $this->menu;
+        return view('livewire.widget-menus',compact('menu'));
     }
 }

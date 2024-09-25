@@ -1,13 +1,11 @@
 :root{
-    --font-family: IranYekan , "Aldhabi" /* فونت پیشفرض*/;
+    --font-family: "IranYekan" , "Aldhabi" /* فونت پیشفرض*/;
     --primary: #2f415d /* رنگ اصلی */;
+    --btn-hover: #e96f84 /* رنگ هاور */;
+    --btn-font-color: #fff ;
+    --header-bg: #f8f8fa /*رنگ پس زمینه هدر*/;
     --bg-background: #fff /*رنگ پس زمینه*/;
-    --header-bg: #EBEDF06B /*رنگ پس زمینه هدر*/;
-    --title: #1e293b /*رنگ عناوین*/;
-    --product-card: #10b981 /* رنگ دکمه ی باکس محصول */;
-    --product-card-hover: #1e293b /*رنگ هاور دکمه ی باکس محصول*/;
-    --sale-badge: #ef4444 /*رنگ نشان تخفیف ها*/;
-    --blog-box-bg: #fbbf24 /*رنگ باکس وبلاگ در صفحه اصلی*/;
-    --footer: #1e293b /*رنگ پس زمینه فوتر*/;
-    --best-suggestion: #ff3a4e /* رنگ پس‌زمینه فروش ویژه*/;
+    --header-color: #000 /*رنگ عناوین*/;
+
+    --footer-bg: #020202 /* رنگ دوم */;
 }
