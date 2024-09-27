@@ -3,10 +3,13 @@
     <div class="product-image">
 
         <!-- Start Product Image -->
-        <a href="{{ $product->link }}" class="product-img"><img class="blur-up lazyload"
+        <a href="{{ $product->link }}" class="product-img">
+            <img class="blur-up lazyload fixed-size"
                 src="{{ $product->img ?: asset('images/image-broken.png') }}" alt="محصول" title="محصول"
-                width="600" height="600" /></a>
+                />
+        </a>
         <!-- End Product Image -->
+
 
         @if (isset($product->is_top) and $product->is_top == true)
             <!-- Product label -->

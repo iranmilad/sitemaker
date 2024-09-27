@@ -20,6 +20,12 @@
             --header-color: {{ $style->settings['header-color'] ?? '#000' }}; /* رنگ عناوین */
             --footer-bg: {{ $style->settings['footer-bg'] ?? '#020202' }}; /* رنگ فوتر */
         }
+        .fixed-size {
+            width: 600px;
+            height: 600px;
+            object-fit: cover; /* این باعث می‌شود که تصویر به‌صورت مناسب در باکس 600x600 قرار گیرد */
+            object-position: center; /* این باعث می‌شود که مرکز تصویر در مرکز باکس قرار گیرد */
+        }
 
     </style>
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/app.css') }}">
