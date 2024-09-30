@@ -68,9 +68,9 @@ return [
     | the locations of the links and the values should be their targets.
     |
     */
-
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        public_path('storage') => base_path('../pardehadmin/storage/app/public/storage/uploads'),
     ],
+
 
 ];
