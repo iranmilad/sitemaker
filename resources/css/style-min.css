@@ -11652,3 +11652,9 @@ textarea:-ms-input-placeholder {
 .collection-banner-grid .collection-item.sp-col .details.Middle-left{
     top: 10% !important;
 }
+.fixed-size {
+    width: 600px;
+    max-height: 600px;
+    object-fit: cover;
+    object-position: center;
+}
