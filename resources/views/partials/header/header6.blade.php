@@ -158,7 +158,7 @@
                     <!--End Wishlist-->
                     <!--Minicart-->
                     <div class="header-cart iconset">
-                        <a href="#;" class="header-cart btn-minicart icon-link d-flex flex-column" data-bs-toggle="offcanvas" data-bs-target="#minicart-drawer">
+                        <a href="#;" class="header-cart btn-minicart icon-link d-flex flex-column" data-bs-toggle="offcanvas" data-bs-target="#minicart">
                             <span class="iconCot"><i class="hdr-icon icon anm anm-bag-l"></i><span class="cart-count">{{$cartCount}}</span></span>
                              <span class="text">سبد خرید من</span>
                         </a>

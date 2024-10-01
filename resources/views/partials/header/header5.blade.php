@@ -560,9 +560,10 @@
                 <!--End Wishlist-->
                 <!--Minicart-->
                 <div class="header-cart iconset" title="سبدخرید">
-                    <a href="#;" class="header-cart btn-minicart clr-none" data-bs-toggle="offcanvas"
-                        data-bs-target="#minicart-drawer"><i class="hdr-icon icon anm anm-cart-l"></i><span
-                            class="cart-count">{{$cartCount}}</span></a>
+                    <a href="#;" class="header-cart btn-minicart clr-none" data-bs-toggle="offcanvas" data-bs-target="#minicart">
+                        <i class="hdr-icon icon anm anm-cart-l"></i>
+                        <span class="cart-count">{{$cartCount}}</span>
+                    </a>
                 </div>
                 <!--End Minicart-->
                 <!--Mobile Toggle-->

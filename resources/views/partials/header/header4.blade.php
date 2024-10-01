@@ -84,9 +84,9 @@
             </div> --}}
             <!--End Menu-->
             <!--Logo-->
-            <div class="logo col-4 col-sm-4 col-md-4 col-lg-2 align-self-center">
+            <div class="logo col-3 col-sm-3 col-md-3 col-lg-1 align-self-center">
                 <a class="logoImg" href="/home">
-                    <img class="mx-lg-auto default-logo" src="{{ $setting->settings['logo'] }}" alt="{{ $setting->settings['site_title'] }}" title="{{ $setting->settings['site_title'] }}" width="149" height="39" />
+                    <img class="default-logo" src="{{ $setting->settings['logo'] }}" alt="{{ $setting->settings['site_title'] }}" title="{{ $setting->settings['site_title'] }}" width="80" height="39" />
                     <span class="logo-txt d-none">هما</span>
                 </a>
             </div>
@@ -208,11 +208,11 @@
                 </div>
                 <!--End Account-->
                 <!--Wishlist-->
-                <div class="wishlist-link iconset" title="علاقه مندی"><a href="{{ route('favorites') }}"><i class="hdr-icon icon anm anm-heart-l"></i><span class="wishlist-count">5</span></a></div>
+                <div class="wishlist-link iconset" title="علاقه مندی"><a href="{{ route('favorites') }}"><i class="hdr-icon icon anm anm-heart-l"></i><span class="wishlist-count d-none">0</span></a></div>
                 <!--End Wishlist-->
                 <!--Minicart-->
                 <div class="header-cart iconset" title="سبدخرید">
-                    <a href="#;" class="header-cart btn-minicart clr-none" data-bs-toggle="offcanvas" data-bs-target="#minicart-drawer"><i class="hdr-icon icon anm anm-basket-l"></i><span class="cart-count  d-none">{{$cartCount}}</span></a>
+                    <a href="#;" class="header-cart btn-minicart clr-none" data-bs-toggle="offcanvas" data-bs-target="#minicart"><i class="hdr-icon icon anm anm-basket-l"></i><span class="cart-count">{{$cartCount}}</span></a>
                 </div>
                 <!--End Minicart-->
                 <!--Mobile Toggle-->

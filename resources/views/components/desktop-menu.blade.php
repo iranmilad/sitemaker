@@ -51,7 +51,7 @@
         </nav>
     </div>
 @elseif ($menu_style=='4')
-    <div class="col-1 col-sm-1 col-md-1 col-lg-5 align-self-center d-menu-col hdr-menu-left menu-position-left">
+    <div class="col-2 col-sm-2 col-md-2 col-lg-6 align-self-center d-menu-col hdr-menu-left menu-position-left">
         <nav class="navigation" id="AccessibleNav">
             <ul id="siteNav" class="site-nav medium left">
                 @foreach($menu->childMenus as $mainItem)

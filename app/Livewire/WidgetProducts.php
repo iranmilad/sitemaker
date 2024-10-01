@@ -34,8 +34,9 @@ class WidgetProducts extends Component
         }
         elseif($this->type == 'discount product'){
             $this->products = Product::where(function ($query){
-                return $query->where('sale_price' , '<>' , null);
+                return $query->whereNotNull('sale_price');
             })->orderBy('id','desc')->take($count)->get();
+
         }
     }
 

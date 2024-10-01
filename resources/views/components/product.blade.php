@@ -3,7 +3,7 @@
     <div class="product-image">
 
         <!-- Start Product Image -->
-        <a href="{{ $product->link }}" class="product-img">
+        <a href="{{ $product->link  ?? '' }}" class="product-img">
             <img class="blur-up lazyload fixed-size"
                 src="{{ $product->img ?: asset('images/image-broken.png') }}" alt="محصول" title="محصول"
                 />

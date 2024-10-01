@@ -1,6 +1,6 @@
 <div>
 
-    @if (isset($options['type']) && $options['type'] === 'simple')
+    @if (isset($options['type']))
     <section class="section product-slider py-0">
         <div class="container container-1330">
             <div class="section-header">
@@ -19,7 +19,7 @@
     @foreach ($products as $product)
         <x-product-quickview :product="$product" />
     @endforeach
-    @elseif(isset($options['type']) && $options['type'] === 'series')
+    {{-- @elseif(isset($options['type']) && $options['type'] === 'series')
         <section class="mt-5 tw-flex tw-flex-col lg:tw-flex-row tw-items-center tw-justify-between">
             <h2 class="text-right fw-bold fs-6">{{ $options['title'] }}</h2>
             <div class="tw-w-full tw-h-1 tw-bg-gray-300 tw-space-x-0 tw-mx-14 tw-hidden "></div>
@@ -104,7 +104,7 @@
                 </div>
             </div>
             <!-- Slider:end -->
-        </div>
+        </div> --}}
 
     @endif
 
