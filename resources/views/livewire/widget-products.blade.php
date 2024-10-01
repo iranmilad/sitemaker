@@ -1,7 +1,7 @@
 <div>
 
     @if (isset($options['type']))
-    <section class="section product-slider py-0">
+    <section class="section product-slider py-0 mt-5">
         <div class="container container-1330">
             <div class="section-header">
                 <h2>{{ $options['title'] }}</h2>
